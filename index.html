@@ -20,6 +20,8 @@
       type="text/javascript"
       src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.1.2/howler.core.min.js"
     ></script>
+  
+
     <style>
       #main {
         margin-top: 5px;
@@ -93,10 +95,10 @@
     <div id="main" class="container-fluid">
       <div id="instructions" class="container hidden">
         <div class="card card-info bg-light">
-          <div class="card-header">Instructions</div>
+          <div class="card-header">Anweisungen</div>
           <div class="card-body">
             <div id="instructions-content"></div>
-            <button id="btn-continue" class="btn btn-primary">Continue</button>
+            <button id="btn-continue" class="btn btn-primary">Weiter</button>
           </div>
         </div>
       </div>
@@ -112,7 +114,7 @@
               type="text"
               id="txt-input"
               class="form-control"
-              placeholder="Type your reply here ..."
+              placeholder="Gib deine Antwort hier ein ..."
             />
             <div class="input-group-append">
               <button
@@ -120,7 +122,7 @@
                 class="btn btn-outline-secondary"
                 type="button"
               >
-                Send
+                Senden
               </button>
             </div>
           </div>
@@ -883,19 +885,24 @@
       };
 
       cbl.instructions((e) => {
-        e.html(`<p>Willkommen zu diesem&nbsp;<b>Experiment mit einem Chatbot-System</b>.<br/><br/>In diesem Experiment,&nbsp;wird Ihnen eine Aufgabe gestellt,&nbsp;die Sie mit unserem Chatbot-System lösen sollen.&nbsp;<b>Die Aufgabe wird am unteren Rand Ihres Bildschirms angezeigt</b>,&nbsp;nachdem Sie&nbsp;"weiter"&nbsp;geklickt haben.&nbsp;Am Ende Ihrer Interaktion,&nbsp;werden Sie gebeten,&nbsp;eine Umfrage über Ihre Erfahrungen mit der Interaktion auszufüllen.&nbsp;Die Studie dauert etwa 5 Minuten.</p><br/><textarea rows="10"style="width: 100%;">Einverständniserklärung nach DSGVO
-  Sie erklären sich einverstanden,&nbsp;an der Studie&nbsp;"Evaluation der Nutzererfahrungen mit einem Chatbot-System"&nbsp;des Fraunhofer-Instituts für Integrierte Schaltungen IIS&nbsp;(im Folgenden Fraunhofer IIS)teilzunehmen.&nbsp;Die Teilnahme an der Studie beinhaltet eine kurze Interaktion mit einem Chatbot,&nbsp;sowie das Ausfüllen eines Fragebogens,der zur Verbesserung der Kommunikation mit Maschinen dient.&nbsp;Ich bin damit einverstanden,&nbsp;dass das Fraunhofer IIS,&nbsp;Am Wolfsmantel 33,&nbsp;91058 Erlangen,&nbsp;Deutschland,&nbsp;zum Zwecke der Durchführung,&nbsp;der Auswertung und Präsentation der oben genannten Studie,&nbsp;folgende persönliche Daten von mir erheben darf:&#10;-&nbsp;Bruttogehalt
+        e.html(`<p>Willkommen zu diesem&nbsp;<b>Experiment mit einem Chatbot-System</b>.<br/><br/>In diesem Experiment,&nbsp;wird Ihnen eine Aufgabe gestellt,&nbsp;die Sie mit unserem Chatbot-System lösen sollen.&nbsp;<b>Die Aufgabe wird am unteren Rand Ihres Bildschirms angezeigt</b>,&nbsp;nachdem Sie&nbsp;"weiter"&nbsp;geklickt haben.&nbsp;Am Ende Ihrer Interaktion,&nbsp;werden Sie gebeten,&nbsp;eine Umfrage über Ihre Erfahrungen mit der Interaktion auszufüllen.&nbsp;Die Studie dauert etwa 5 Minuten.</p><br/>
+        <textarea rows="10"style="width: 100%;">Einverständniserklärung nach GDPR
+  Sie erklären sich einverstanden,&nbsp;an der Studie&nbsp;"Evaluation der Nutzererfahrungen mit einem Chatbot-System"&nbsp;des Fraunhofer-Instituts für Integrierte Schaltungen IIS&nbsp;(im Folgenden Fraunhofer IIS)teilzunehmen.&nbsp;Die Teilnahme an der Studie beinhaltet eine kurze Interaktion mit einem Chatbot,&nbsp;sowie das Ausfüllen eines Fragebogens,der zur Verbesserung der Kommunikation mit Maschinen dient.&nbsp;Ich bin damit einverstanden,&nbsp;dass das Fraunhofer IIS,&nbsp;Am Wolfsmantel 33,&nbsp;91058 Erlangen,&nbsp;Deutschland,&nbsp;zum Zwecke der Durchführung,&nbsp;der Auswertung und Präsentation der oben genannten Studie,&nbsp;folgende persönliche Daten von mir erheben darf:&#10;
+  -&nbsp;Bruttogehalt
   -&nbsp;Steuerklasse
   -&nbsp;Anzahl an Kindern
   -&nbsp;Bundesland
   -&nbsp;Wird Kirchensteuer gezahlt?
   -&nbsp;Subjektive Bewertungen Ihrer Erfahrung mit dem Chatbot-System
-  (nachstehend als&nbsp;"Daten"&nbsp;bezeichnet).&#10;Eine weitere Verwendung der Daten ist ausgeschlossen.&#10;Die anonymisierten Daten werden in der Mensch-Maschine-Interaktion,&nbsp;User Experience und Natural Language Processing sowie für statistische Auswertungen der Studie verwendet.&nbsp;Die Auswertung Ihrer Daten erfolgt ausschließlich durch Mitarbeiter des Fraunhofer IIS,&nbsp;diese sind zur Vertraulichkeit verpflichtet.&#10;Ich willige ferner ein,&nbsp;dass das Fraunhofer IIS meine oben genannten Daten an die folgenden Datenschutzbeauftragten und die für die Verarbeitung der Daten für den oben genannten Zweck Verantwortlichen weitergeben darf:&#10;-&nbsp;Fraunhofer-Gesellschaft
+  (nachstehend als&nbsp;"Daten"&nbsp;bezeichnet).&#10;
+  Eine weitere Verwendung der Daten ist ausgeschlossen.&#10;Die anonymisierten Daten werden in der Mensch-Maschine-Interaktion,&nbsp;User Experience und Natural Language Processing sowie für statistische Auswertungen der Studie verwendet.&nbsp;Die Auswertung Ihrer Daten erfolgt ausschließlich durch Mitarbeiter des Fraunhofer IIS,&nbsp;diese sind zur Vertraulichkeit verpflichtet.&#10;Ich willige ferner ein,&nbsp;dass das Fraunhofer IIS meine oben genannten Daten an die folgenden Datenschutzbeauftragten und die für die Verarbeitung der Daten für den oben genannten Zweck Verantwortlichen weitergeben darf:&#10;
+  -&nbsp;Fraunhofer-Gesellschaft
   -&nbsp;Entwicklungspartner
   -&nbsp;Universitäten
   -&nbsp;Dienstanbieter
-  Soweit diese zum Zweck der Erreichung des Forschungszwecks in das Projekt eingebunden sind.&#10;Die Teilnahme an der Studie ist freiwillig.&nbsp;Sie können Ihre Teilnahme an der Studie jederzeit beenden und Ihre Zustimmung zur Studie ohne Angabe von Gründen ändern oder widerrufen.&#10;In Bezug auf die von uns verarbeiteten personenbezogenen Daten haben Sie Anspruch auf die Rechte der betroffenen Person nach DSGVO
-  ,&nbsp;das Recht auf Information,&nbsp;Berichtigung,&nbsp;Widerruf oder Sperrung/Löschung Ihrer Daten,&nbsp;sowie das Recht,&nbsp;sich bei der Aufsichtsbehörde zu beschweren.&#10;Die Anforderungen des 32 DSGVO-Formulars für den Schutz personenbezogener Daten werden erfüllt.&#10;Die Daten werden so lange elektronisch gespeichert,&nbsp;wie es für die Erfüllung des wissenschaftlichen Forschungszwecks erforderlich ist&nbsp;(Entwicklung benutzerfreundlicher Maschinen und wissenschaftliche Veröffentlichung der Forschungsergebnisse).&nbsp;Soweit der Forschungszweck ernsthaft beeinträchtigt wird oder seine Verwirklichung unmöglich wird,&nbsp;können im Rahmen der gesetzlichen Erlaubnisbestimmungen Ausnahmen von den in den Absätzen 15,&nbsp;16,&nbsp;18 und 21 DSGVO genannten Rechten vorgesehen werden.&#10;Wenn Sie Fragen zur Erhebung und zum Datenschutz haben,&nbsp;wenden Sie sich bitte an:&#10;Dr.Birgit Popp,&nbsp;birgit.popp@iis.fraunhofer.de
+
+  Soweit diese zum Zweck der Erreichung des Forschungszwecks in das Projekt eingebunden sind.&#10;Die Teilnahme an der Studie ist freiwillig.&nbsp;Sie können Ihre Teilnahme an der Studie jederzeit beenden und Ihre Zustimmung zur Studie ohne Angabe von Gründen ändern oder widerrufen.&#10;In Bezug auf die von uns verarbeiteten personenbezogenen Daten haben Sie Anspruch auf die Rechte der betroffenen Person nach GDPR,&nbsp;das Recht auf Information,&nbsp;Berichtigung,&nbsp;Widerruf oder Sperrung/Löschung Ihrer Daten,&nbsp;sowie das Recht,&nbsp;sich bei der Aufsichtsbehörde zu beschweren.&#10;Die Anforderungen des 32 GDPR-Formulars für den Schutz personenbezogener Daten werden erfüllt.&#10;Die Daten werden so lange elektronisch gespeichert,&nbsp;wie es für die Erfüllung des wissenschaftlichen Forschungszwecks erforderlich ist&nbsp;(Entwicklung benutzerfreundlicher Maschinen und wissenschaftliche Veröffentlichung der Forschungsergebnisse).&nbsp;Soweit der Forschungszweck ernsthaft beeinträchtigt wird oder seine Verwirklichung unmöglich wird,&nbsp;können im Rahmen der gesetzlichen Erlaubnisbestimmungen Ausnahmen von den in den Absätzen 15,&nbsp;16,&nbsp;18 und 21 GDPR genannten Rechten vorgesehen werden.&#10;Wenn Sie Fragen zur Erhebung und zum Datenschutz haben,&nbsp;wenden Sie sich bitte an:&#10;
+  Dr.Birgit Popp,&nbsp;birgit.popp@iis.fraunhofer.de
   Fraunhofer-Datenschutzbeauftragter:&nbsp;Prof.Dr.Ralph Harter,&nbsp;ralph.harter@zv.fraunhofer.de</textarea><br/><br/>
   `);
       });
@@ -904,7 +911,7 @@
         let grossValue = 0;
         let netSalary = 0;
         let bundesLand = "";
-        let jahresGehalt = false;
+        let children = 0;
 
         s.begin(() => {
           s.set("condition", cbl.random_item(["privacy_priming", "control"]));
@@ -919,43 +926,48 @@
           ss.begin(() => {
             s.set("voice", "Mary");
             s.say(
-              "Hi! Willkommen beim DATEV Gehaltsrechner. Ich kann dir einen Überblick über deinen Netto-Lohn geben, wenn du mir dein Bruttogehalt, deine Steuerklasse, die Kinderanzahl und deine Kirchensteuerpflicht verrätst. Möchtest du für den Einstieg eine kurze Einführung hören?"
+              "Hi! Willkommen beim DATEV Gehaltsrechner. Ich kann dir einen Überblick über deinen Netto-Lohn geben, wenn du mir dein Bruttogehalt, deine Steuerklasse, die Kinderanzahl und deine Kirchensteuerpflicht verrätst. Möchtest du für den Einstieg eine kurze Einführung hören?",
+              
             );
-            $("#hint").html(
-              "Aufgabe: Sie können mit <b>Ja</b> oder <b>Nein</b> antworten."
-            );
+            s.ready(() => {
+              $("#hint").html(
+                "Du kannst mit <b>Ja</b> oder <b>Nein</b> antworten."
+              );
+            });
           });
           ss.match(/stop|alexa stop/i, () => {
-            s.say("Tschüss. Bis dann!!");
+            s.say("Tschüss. Bis dann!!" );
             s.survey("css-survey");
           });
           ss.match(/ja/i, () => {
+            $("#hint").html("");
             s.run("introduction");
           });
           ss.match(/nein/i, () => {
+            $("#hint").html("");
             s.say(
               'Kein Problem! Übrigens: Wenn du die Einführung doch hören willst, sag einfach "Alexa, Hilfe". Für welchen Betrag möchtest du den Nettowert wissen?'
             );
-            s.run("grossSalary");
+            s.ready(() => {
+              s.run("grossSalary");
+            });
           });
           s.sub("introduction", (ss) => {
+            $("#hint").html("");
             ss.begin(() => {
               s.set("voice", "Mary");
             });
             s.say(
-              `Alles klar. Ich kann die Lohnsteuer für Arbeitnehmer und Arbeitgeber berechnen. Um die Arbeitgeberkosten zu erhalten, sage einfach "Arbeitgeberkosten"`
+              `Alles klar. Ich kann die Lohnsteuer für Arbeitnehmer berechnen. Dazu stelle ich dir einige Fragen zur Steuerklasse, Kirchenbeträgen oder auch deinem Alter. In der Berechnung gehe ich davon aus, dass du gesetzlich versichert bist und keine weiteren geldwerten Vorteile angeben willst.`
+                   
             );
-            s.pause(5000);
-            s.say(
-              "In beiden Fällen stelle ich dir einige Fragen zur Steuerklasse, Kirchenbeträgen oder auch deinem Alter. In der Berechnung gehe ich davon aus, dass du gesetzlich versichert bist und keine weiteren Geldwerten Vorteile angeben willst."
-            );
-            s.pause(5000);
             s.say(
               "Außerdem hast du die Möglichkeit, deine Daten zu speichern oder dir die Ergebnisse per E-Mail zusenden zu lassen. Hierfür benötige ich natürlich deine Erlaubnis. Diese kannst du in der Alexa App freigeben."
+              //   
             );
-            s.pause(5000);
             s.say(
-              `Wenn du später nochmal die Einführung hören willst, sage einfach"Alexa, Hilfe". Das war's auch schon. Für welchen Betrag möchtest du den Nettowert wissen?`
+              `Wenn du später nochmal die Einführung hören willst, sage einfach "Alexa, Hilfe". Das war's auch schon. Für welchen Betrag möchtest du den Nettowert wissen?`
+               
             );
 
             s.ready(() => {
@@ -970,38 +982,43 @@
         });
 
         s.sub("grossSalary", (ss) => {
-          $("#hint").html(
-            "Du kannst entweder ein Jahres- oder Monatsgehalt angeben."
-          );
-
           ss.begin(() => {
             s.set("voice", "Mary");
+            $("#hint").html(
+              "Du kannst ein <b>Jahres-</b> oder <b>Monatsgehalt</b> angeben. Gib z.B. '3600' ein."
+            );
           });
           console.log("grosssalary wird ausgeführt");
 
           ss.match(/^[4-9][5-9][0-9]|\d{3,}/im, () => {
+            $("#hint").html("");
             grossValue = parseInt(msgArray.slice(-1).pop());
             netSalary = grossValue;
             if (grossValue > 15000) {
-              grossValue = grossValue / 12;
               s.run("annualIncome");
             } else {
               s.say(
-                `Alles klar! ${grossValue} Euro Bruttogehalt. Wie ist deine Steuerklasse?`
+                `Alles klar! ${grossValue} Euro Bruttogehalt. Wie ist deine Steuerklasse?`,
+                
               );
-              s.run("taxClass");
+              s.ready(() => {
+                s.run("taxClass");
+              });
             }
           });
 
           s.sub("annualIncome", (ss) => {
-            $("#hint").html("");
             ss.begin(() => {
               s.set("voice", "Mary");
-              s.say("Ist dein Gehalt ein Jahreseinkommen?");
+              s.say("Ist dein Gehalt ein Jahreseinkommen?", {
+                method: "browser_tts",
+              });
+              $("#hint").html("Gib bitte <b>Ja</b> oder <b>Nein</b> ein.");
             });
 
             ss.match(/ja/i, () => {
-              netSalary = grossValue;
+              $("#hint").html("");
+              netSalary = grossValue / 12;
               s.say("Alles klar. Wie ist deine Steuerklasse?");
               s.ready(() => {
                 s.run("taxClass");
@@ -1009,8 +1026,11 @@
             });
 
             ss.match(/nein/i, () => {
+              $("#hint").html("");
               netSalary = grossValue;
-              s.say("Alles klar. Wie ist deine Steuerklasse?");
+              s.say("Alles klar. Wie ist deine Steuerklasse?", {
+                method: "browser_tts",
+              });
               s.ready(() => {
                 s.run("taxClass");
               });
@@ -1019,13 +1039,15 @@
 
           ss.match(/hilfe/i, () => {
             s.say(
-              "Nenne uns hier einen Betrag, zum Beispiel 1000 Euro. Für welchen Betrag möchtest du den Nettowert wissen?"
+              "Nenne uns hier einen Betrag, zum Beispiel 1000 Euro. Für welchen Betrag möchtest du den Nettowert wissen?",
+              
             );
           });
 
           ss.unknown(function () {
             s.say(
-              "Hoppla, da scheint etwas nicht zu stimmen. Um den Nettolohn zu berechnen, benötige ich den Bruttobetrag deines monatlichen Einkommens. Der Bruttobetrag ist dein Gehalt vor Abzug aller Steuern und Versicherungen. Versuchen wir es noch einmal. Für welchen Betrag möchtest du den Nettowert wissen?"
+              "Hoppla, da scheint etwas nicht zu stimmen. Um den Nettolohn zu berechnen, benötige ich den Bruttobetrag deines monatlichen Einkommens. Der Bruttobetrag ist dein Gehalt vor Abzug aller Steuern und Versicherungen. Versuchen wir es noch einmal. Für welchen Betrag möchtest du den Nettowert wissen?",
+              
             );
           });
           $("#hint").html();
@@ -1034,10 +1056,15 @@
         s.sub("taxClass", (ss) => {
           ss.begin(() => {
             s.set("voice", "Mary");
+            $("#hint").html(
+              "Bitte geben Sie einen Wert zwischen 1 und 6 an oder gebe 'Hilfe' ein, wenn du deine Steuerklasse nicht kennst."
+            );
           });
 
           let taxClassRegex = new RegExp(/^[1-6]?$|6/im);
           ss.match(taxClassRegex, () => {
+            $("#hint").html("");
+
             let taxClass = msgArray.slice(-1).pop();
             switch (parseInt(taxClass)) {
               case 1:
@@ -1048,7 +1075,6 @@
               case 2:
                 netSalary -= grossValue * 0.164;
                 console.log("SK 2");
-
                 break;
               case 3:
                 netSalary -= grossValue * 0.1119;
@@ -1057,23 +1083,25 @@
               case 5:
                 netSalary -= grossValue * 0.2806;
                 console.log("SK 5");
-
                 break;
               case 6:
                 netSalary -= grossValue * 0.2884;
                 console.log("SK 6");
-
                 break;
             }
             console.log("Net salary after taxes", netSalary);
-            s.say(`Super, vielen Dank! Wieviele Kinder hast du?`);
+            s.say(`Super, vielen Dank! Wieviele Kinder hast du?`, {
+              method: "browser_tts",
+            });
             s.ready(() => {
               s.run("children");
             });
           });
 
           ss.match(/weiß nicht|weiß ich nicht|keine ahnung|kein plan/i, () => {
-            s.run("taxesHelp");
+            s.ready(() => {
+              s.run("taxesHelp");
+            });
           });
 
           ss.match(/hilfe/i, () => {
@@ -1088,28 +1116,36 @@
               s.say(
                 "Kein Problem. Ich helfe dir dabei. Handelt es sich um ein Haupt- oder Nebeneinkommen?"
               );
+              $("#hint").html("");
             });
 
             ss.match(/Haupteinkommen/i, () => {
               s.say("Alles klar! Bist du denn verheiratet?");
-              s.run("married");
+              s.ready(() => {
+                s.run("married");
+              });
             });
 
             s.sub("marrried", (ss) => {
               ss.begin(() => {
                 s.set("voice", "Mary");
+                $("#hint").html("");
               });
 
               ss.match(/ja/i, () => {
                 s.say(
                   "Kleiner Tipp: Du kannst die Berechnung auch mit Steuerklasse 3 und 5 durchführen, um zu prüfen, ob das steuerliche Vorteile für dich bringt. Für diese Berechnung fahren wir mit Steuerklasse 4 fort, da diese die gängige ist. Okay, weiter gehts. Wieviele Kinder hast du?"
                 );
-                s.run("children");
+                s.ready(() => {
+                  s.run("children");
+                });
               });
 
               ss.match(/nein/i, () => {
                 s.say("Alles klar! Hast du minderjährige Kinder?");
-                s.run("children");
+                s.ready(() => {
+                  s.run("children");
+                });
               });
             });
 
@@ -1117,7 +1153,9 @@
               s.say(
                 "Für Nebeneinkünfte ist die Steuerklasse 6 vorgesehen. Dies ist unabhängig davon, ob du verheiratet bist oder Kinder hast. Für das Haupteinkommen beeinflussen diese aber die Berechnung. Okay, weiter gehts. Wieviele Kinder hast du?"
               );
-              s.run("children");
+              s.ready(() => {
+                s.run("children");
+              });
             });
           });
 
@@ -1126,39 +1164,46 @@
               `Da stimmt was nicht ganz. Am besten du nennst mir deine Steuerklasse als Zahl. Diese kann zwischen 1 und 6 liegen. Falls du deine Steuerklasse nicht kennst, kann ich dir auch helfen. Sage dazu einfach "Keine Ahnung" und wir ermitteln deine Steuerklasse gemeinsam. Also: Wie lautet deine Steuerklasse?`
             );
           });
-          $("#hint").html(
-            "Bitte gib einen Wert zwischen 1 und 6 an. Wenn du deine Steuerklasse nicht kennst, gib 'hilfe' ein"
-          );
         });
 
         s.sub("children", (ss) => {
           ss.begin(() => {
             s.set("voice", "Mary");
+            $("#hint").html("Wenn du keine Kinder hast, gib 0 ein.");
           });
 
           ss.match(/^[0-9]{0,}$/im, () => {
+            children = parseInt(msgArray.slice(-1).pop());
+            children > 0
+              ? (netSalary -= grossValue * 0.0305)
+              : (netSalary -= grossValue * 0.034);
+            console.log("Amount of children", children);
             s.say("Ok! Und in welchem Bundesland lebst du? ");
-            s.run("bundeslaender");
+            s.ready(() => { s.run("bundeslaender") });
           });
 
           ss.unknown(function () {
-            s.say("");
+            s.say(
+              "Ok ich verstehe. Kinder können viel Arbeit machen, aber Kinder können auch steuerliche Vergünstigungen bringen. Nenne mir einfach die Anzahl deiner minderjährigen Kinder oder gib '0' ein."
+            );
           });
-          $("#hint").html("Wenn du keine Kinder hast, gib 0 ein.");
         });
 
         s.sub("bundeslaender", (ss) => {
           ss.begin(() => {
             s.set("voice", "Mary");
+            $("#hint").html("Nenne hier dein <b>Bundesland</b>, oder gib <b>'Hilfe'</b> ein, wenn du mehr wissen willst.");
           });
 
           let bundesLaender = new RegExp(
             /berlin|Berlin|brandenburg|Brandenburg|sachsen|Sachsen|bayern|Bayern|sachsen anhalt|sachsen-anhalt|Sachsen Anhalt|Sachsen-Anhalt|sachsen Anhalt|sachsen-Anhalt|Sachsen-anhalt|Sachsen anhalt|Mecklenburg-Vorpommern|Mecklenburg Vorpommern|mecklenburg-vorpommern|mecklenburg vorpommern|Mecklenburg-vorpommern|Mecklenburg vorpommern|mecklenburg-Vorpommern|mecklenburg Vorpommern|Thüringen|thüringen|Saarland|saarland|Nordrhein-Westfalen|Nordrhen Westfalen|Nordrhein westfalen|Nordrhein-westfalen|nordrhein-Westfalen|nordrhein Westfalen|nordrhein westfalen|nordrhein-westfalen|Niedersachsen|niedersachsen|Rheinland-Pfalz|Rheinland Pfalz|rheinland-pfalz|rheinland pfalz|Rheinland-pfalz|Rheinland pfalz|rheinland-Pfalz|rheinland Pfalz|Hessen|hessen|Baden-Würtemberg|Baden Würtemberg|Baden würtemberg|Baden-würtemberg|baden-würtemberg|baden würtemberg|baden-Würtemberg|baden Würtemberg|Schleswig-Holstein|Schleswig Holstein|Schleswig holstein|Schlesweig-holstein|schleswig-holstein|schleswigholstein|schleswig-Holstein|schleswigHolstein|Hamburg|hamburg|Bremen|bremen/
           );
           ss.match(bundesLaender, () => {
+            $("#hint").html("");
             bundesLand = msgArray.slice(-1).pop();
             console.log("Bundesland", bundesLand);
-            s.run("churchTax");
+
+            s.ready(() => { s.run("churchTax") });
           });
 
           ss.match(/hilfe|kein plan|keine ahnung|weiß nicht/i, () => {
@@ -1178,9 +1223,12 @@
           ss.begin(() => {
             s.set("voice", "Mary");
             s.say("Bezahlst du Kirchensteuer?");
+            $("#hint").html("Gib <b>Ja</b> oder <b>Nein</b> oder 'Hilfe' ein.");
+
           });
 
           ss.match(/ja/i, async () => {
+            $("#hint").html("");
             switch (bundesLand.toLowerCase()) {
               case "bayern":
                 netSalary -= grossValue * 0.09;
@@ -1188,11 +1236,12 @@
               default:
                 netSalary -= grossValue * 0.08;
             }
-            s.run("calculationResult");
+            s.ready(() => { s.run("calculationResult")});
           });
 
           ss.match(/nein/i, async () => {
-            s.run("calculationResult");
+            $("#hint").html("");
+            s.ready(() => {  s.run("calculationResult")});
           });
 
           ss.match(/hilfe|kein plan|keine ahnung|weiß nicht/i, () => {
@@ -1209,7 +1258,13 @@
             s.set("voice", "Mary");
 
             //Sozialversicherungsbeiträge
-            netSalary -= grossValue * 0.198;
+            //Pflegeversicherung 3,4% ohne Kinder, 3,05% mit Kindern https://www.bundesgesundheitsministerium.de/themen/pflege/online-ratgeber-pflege/die-pflegeversicherung/finanzierung.html#:~:text=Der%20Beitragssatz%20liegt%20seit%20dem,H%C3%A4lfte%2C%20also%20jeweils%201%2C525%20Prozent.
+
+            //RV: 9,3%
+            //KV: 7,3%
+            //PV: 1,875
+            //https://www.lohn-info.de/sozialversicherungsbeitraege2022.html
+            netSalary -= grossValue * 0.18475;
             s.say(
               `Sehr gut. Dann habe ich auch schon alles wichtige. Bitte beachte, dass das Ergebnis nur ein Richtwert ist. Der voraussichtliche Nettolohn beträgt ${netSalary} Euro.`
             );
@@ -1223,7 +1278,7 @@
           ss.begin(() => {
             s.set("voice", "Mary");
             s.say(
-              "Willst du, dass ich deine Daten lösche, um deine Privatsphäre zu schützen?"
+              "Willst du, dass deine Daten gelöscht werden, um deine Privatsphäre zu schützen?"
             );
           });
 
@@ -1232,7 +1287,9 @@
               '<input type="hidden"name="response_yn"value="yes"/>'
             );
 
-            s.say("Okay. Ich habe deine Daten aus dieser Interaktion gelöscht.");
+            s.say(
+              "Okay. Ich habe deine Daten aus dieser Interaktion gelöscht."
+            );
             s.say("Auf Wiedersehen!");
             s.pause(1000);
             s.ready(() => {
@@ -1258,12 +1315,12 @@
 
           ss.unknown(function () {
             s.say(
-              "Entschuldigung, ich verstehe nicht. Du kannst 'ja' oder 'nein' sagen, um die Daten zu löschen, die ich aus unserer Interaktion gesammelt habe."
+              "Entschuldigung, ich verstehe nicht. Sie können 'ja' oder 'nein' sagen, um die Daten zu löschen, die ich aus unserer Interaktion gesammelt habe."
             );
           });
 
           $("#hint").html(
-            "Aufgabe: Du hast die möglichkeit deine Daten speichern zu lassen. Gib dazu <b>'Ja'</b> ein, wenn du das willst, oder <b>'Nein'</b>, wenn du deine Daten nicht speichern lassen willst."
+            "Aufgabe: Du hast die möglichkeit dein Daten löschen zu lassen. Geben Sie <b>'Ja'</b> ein, wenn Sie das wollen, oder <b>'Nein'</b>, wenn du deine Daten nicht löschen lassen willst."
           );
         });
 
@@ -1303,12 +1360,12 @@
 
           ss.unknown(function () {
             s.say(
-              "Sag einfach 'Ja', wenn ich die Daten für die nächste Berechnung speichern soll."
+              "Sagen Sie einfach 'Ja', wenn ich die Daten für die nächste Berechnung speichern soll."
             );
           });
 
           $("#hint").html(
-            "Aufgabe: Du hast an dieser Stelle die Möglichkeit deine Daten löschen zu lassen um deine Privatsphäre zu schützen. Gib dazu <b>'Ja'</b> ein, wenn du das wünschst, oder <b>'Nein'</b>, wenn du nicht willst, dass deine Daten gelöscht werden."
+            "Aufgabe: Sie haben an dieser Stelle die Möglichkeit ihre Daten löschen zu lassen um ihre Privatsphäre zu schützen. Geben Sie <b>'Ja'</b> ein, wenn Sie das wünschen, oder <b>'Nein'</b>, wenn Sie nicht wollen, dass ihre Daten gelöscht werden."
           );
         });
 
@@ -1324,7 +1381,7 @@
 
         s.select(
           "n_attention",
-          "Gib das Wort <b>orange</b> in das Textfeld unten ein. \n Welches Wort wurdest du gebeten einzugeben?",
+          "Geben Sie das Wort <b>orange</b> in das Textfeld unten ein. \n Welches Wort wurden Sie gebeten einzugeben?",
           [
             ["none", "keines"],
             ["brown", "braun"],
@@ -1399,7 +1456,10 @@
             "<pre>" +
             cbl.survey_results_json("survey")
         ) + "</pre>";
-      });
+
+        window.open(`mailto:adennis200@live.de?subject=survey&body=${cbl.survey_results_json("survey")}`);
+            });
+
 
       cbl.start("datev-backup");
     </script>
