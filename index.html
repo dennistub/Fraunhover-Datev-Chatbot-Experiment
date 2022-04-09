@@ -1471,24 +1471,7 @@
 
       cbl.completed((e) => {
         e.html(
-          "<p>Thank you for completing the survey, please email the " +
-            "following JSON to the experiment leader:</p><br/>" +
-            "<pre>" +
-            cbl.survey_results_json("survey")
-        ) + "</pre>";
-
-        let req = new XMLHttpRequest();
-
-        req.onreadystatechange = () => {
-          if (req.readyState == XMLHttpRequest.DONE) {
-            console.log(req.responseText);
-          }
-        };
-
-        req.open("POST", "https://api.jsonbin.io/v3/b", true);
-        req.setRequestHeader("Content-Type", "application/json");
-        req.setRequestHeader("X-Master-Key", "$2b$10$OpqpX1ClKRaQhj8QhbE/q.GYv2TZsb.RMyu1c8qIuye9Ki5scgBue");
-        req.send(cbl.survey_results_json("survey"));
+          "<p>Thank you for completing the survey</p><br/>";
       });
 
       cbl.start("datev-backup");
