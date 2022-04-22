@@ -3249,14 +3249,14 @@
       };
 
       cbl.instructions((e) => {
-        e.html(`<p>Willkommen zu diesem&nbsp;<b>Experiment mit einem Chatbot-System, basierend auf dem Alexa skill "Datev Lab Gehaltsrechner"</b>.<br/><br/>In diesem Experiment&nbsp;wird dir eine Aufgabe gestellt,&nbsp;die du mit unserem Chatbot-System lösen sollst.&nbsp;<b>Die Aufgabe wird am unteren Rand deines Bildschirms angezeigt</b>,&nbsp;nachdem du&nbsp;<b>"weiter"</b>&nbsp;geklickt hast.&nbsp;Am Ende deiner Interaktion&nbsp;wirst du gebeten,&nbsp;eine Umfrage über deine Erfahrungen mit der Interaktion auszufüllen.&nbsp;Die Studie dauert etwa <b>5-10 Minuten</b>.</p><br/>
+        e.html(`<p>Willkommen zu diesem&nbsp;<b>Experiment mit einem Chatbot-System.</b><br/><br/>In diesem Experiment&nbsp;wird dir eine Aufgabe gestellt,&nbsp;die du mit unserem Chatbot-System lösen sollst.&nbsp;<b>Die Aufgabe wird am unteren Rand deines Bildschirms angezeigt</b>,&nbsp;nachdem du&nbsp;<b>"weiter"</b>&nbsp;geklickt hast.&nbsp;Am Ende deiner Interaktion&nbsp;wirst du gebeten,&nbsp;eine Umfrage über deine Erfahrungen mit der Interaktion auszufüllen.&nbsp;Die Studie dauert etwa <b>5-10 Minuten</b>.</p><br/>
         <article rows="10"style="width: 100%;">
           <section>
             <h3>Einverständniserklärung nach DSGVO</h3>
           </section>
           <section>
             <p>
-  Du erklärst dich einverstanden,&nbsp;an der Studie&nbsp;<b>"Evaluation der Nutzererfahrungen mit einem Chatbot-System auf Basis des Alexa Skills <i>Datev Lab Gehaltsrechner</i>"</b>&nbsp;des Fraunhofer-Instituts für Integrierte Schaltungen IIS&nbsp;(im Folgenden Fraunhofer IIS) teilzunehmen.&nbsp;Die Teilnahme an der Studie beinhaltet eine kurze Interaktion mit einem <b>Chatbot</b>, &nbsp;sowie das <b>Ausfüllen eines Fragebogens</b>, der zur Verbesserung der Kommunikation mit Maschinen dient.&nbsp;Ich bin damit einverstanden,&nbsp;dass das Fraunhofer IIS,&nbsp;Am Wolfsmantel 33,&nbsp;91058 Erlangen,&nbsp;Deutschland,&nbsp;zum Zwecke der Durchführung,&nbsp;der Auswertung und Präsentation der oben genannten Studie,&nbsp;folgende persönliche Daten von mir erheben darf:&#10;</p>
+  Du erklärst dich einverstanden,&nbsp;an der Studie&nbsp;<b>"Evaluation der Nutzererfahrungen mit einem Chatbot-System."</b>&nbsp;des Fraunhofer-Instituts für Integrierte Schaltungen IIS&nbsp;(im Folgenden Fraunhofer IIS) teilzunehmen.&nbsp;Die Teilnahme an der Studie beinhaltet eine kurze Interaktion mit einem <b>Chatbot</b>, &nbsp;sowie das <b>Ausfüllen eines Fragebogens</b>, der zur Verbesserung der Kommunikation mit Maschinen dient.&nbsp;Ich bin damit einverstanden,&nbsp;dass das Fraunhofer IIS,&nbsp;Am Wolfsmantel 33,&nbsp;91058 Erlangen,&nbsp;Deutschland,&nbsp;zum Zwecke der Durchführung,&nbsp;der Auswertung und Präsentation der oben genannten Studie,&nbsp;folgende persönliche Daten von mir erheben darf:&#10;</p>
               <ul>
                 <li>Bruttogehalt
                 </li>
@@ -3391,7 +3391,7 @@
             s.set("voice", "Vicki");
 
             $("#hint").html(
-              "Du kannst ein <b>Jahres-</b> oder <b>Monatsgehalt</b> angeben. Gib z.B. '3600' ein."
+              "Du kannst ein <b>Jahres-</b> oder <b>Monatsgehalt</b> angeben. Gib dazu jeweils dein Gehalt <b>als Zahl</b> an"
             );
           });
 
@@ -3755,6 +3755,8 @@
             //ALV: 1.2%
             //KV: 7,85%
 
+            
+
             //Pflegeversicherung 3,4% ohne Kinder, 3,05% mit Kindern https://www.bundesgesundheitsministerium.de/themen/pflege/online-ratgeber-pflege/die-pflegeversicherung/finanzierung.html#:~:text=Der%20Beitragssatz%20liegt%20seit%20dem,H%C3%A4lfte%2C%20also%20jeweils%201%2C525%20Prozent.
             lst2021 = new Lohnsteuer2021({
               RE4: grossValue * 100,
@@ -3777,9 +3779,27 @@
 
             console.log("kirchensteuer", kirchensteuer);
             kirchensteuer = kirchensteuer * lohnsteuer;
-            let pflegeVersicherung = children > 0 ? 0.015248 : 0.018748;
-            let sozialabgaben =
-              grossValue * (0.093 + 0.012 + 0.0785 + pflegeVersicherung);
+            let pflegeVersicherung = children > 0 ? 0.01525 : 0.01875;
+
+            //------------------------Sozialabgaben-Gleitzone--------------------//
+
+            //Anteile Gleitzone
+            
+            const FAKTOR_F = 0.7509;
+            let beitragsBemessungsWert = FAKTOR_F * 450 + ((1300/(1300-450)) - (450/(1300-450)) * FAKTOR_F) * (grossValue - 450);
+            
+            const anteilRvGleit = (0.186 * beitragsBemessungsWert) - (0.093 * grossValue);
+            const anteilALV = (0.024 * beitragsBemessungsWert) - (0.012 * grossValue);
+            const anteilKV = (0.147 *beitragsBemessungsWert) - (0.0785 * grossValue);
+            const anteilPV = children > 0? (0.0305 * beitragsBemessungsWert) - (0.01525 * grossValue): (0.034 * beitragsBemessungsWert) - (0.01875 * grossValue);
+            console.log("anteilRvGleit", anteilRvGleit);
+            console.log("anteilALV", anteilALV);
+            console.log("anteilKV", anteilKV);
+            console.log("anteilPV", anteilPV);
+
+            let sozialabgaben = grossValue > 450 && grossValue <= 1300 ? (anteilRvGleit + anteilALV + anteilKV + anteilPV): grossValue > 1300? grossValue * (0.093 + 0.012 + 0.073 + pflegeVersicherung): 0; //https://www.lohn-info.de/gleitzone_2022.html
+
+
             console.log("lohnsteuer", lohnsteuer);
             console.log("sozialabgaben", sozialabgaben);
             netSalary =
@@ -3881,7 +3901,7 @@
 
             s.say("In Ordnung.");
             s.say("Auf Wiedersehen");
-            //  s.pause(1000);
+            s.pause(1000);
             s.ready(() => {
               s.run("survey_subscript");
             });
@@ -3906,9 +3926,9 @@
       });
 
       cbl.survey("survey", (s) => {
-        s.section(
-          "Im folgenden werden wir das statt <b>'Chatbot'</b> das Wort <b>'Skill'</b> verwenden.<br/> Der Begriff <b>'Skill'</b> beschreibt hierbei eine Anwendung, ähnlich einer App, für Amazon Alexa Geräte.<br/>"
-        );
+       /* s.section(
+          "Im folgenden werden wir das statt <b>'Chatbot'</b> das Wort <b>'Chatbot'</b> verwenden.<br/> Der Begriff <b>'Chatbot'</b> beschreibt hierbei eine Anwendung, ähnlich einer App, für Amazon Alexa Geräte.<br/>"
+        );*/
         s.section(
           "<br /><br />Bitte gib an, wie stark du den folgenden Aussagen zustimmen oder nicht zustimmst:"
         );
@@ -3918,27 +3938,27 @@
           [
             [
               "q_PRIV1",
-              "Dieser Skill zeigt Sorge um die Privatsphäre seiner Benutzer.",
+              "Dieser Chatbot zeigt Sorge um die Privatsphäre seiner Benutzer.",
             ],
             [
               "q_PRIV2",
-              "Ich fühle mich sicher, wenn ich persönliche Informationen an diesen Skill sende.",
+              "Ich fühle mich sicher, wenn ich persönliche Informationen an diesen Chatbot sende.",
             ],
             [
               "q_PRIV3",
-              "Dieser Skill hält sich an die Gesetze zum Schutz persönlicher Daten.",
+              "Dieser Chatbot hält sich an die Gesetze zum Schutz persönlicher Daten.",
             ],
             [
               "q_PRIV4",
-              "Dieser Skill sammelt nur persönliche Daten, die für seine Tätigkeit notwendig sind.",
+              "Dieser Chatbot sammelt nur persönliche Daten, die für seine Tätigkeit notwendig sind.",
             ],
             [
               "q_PRIV5",
-              "Dieser Skill respektiert die Rechte der Nutzer, wenn er persönliche Informationen sammelt.",
+              "Dieser Chatbot respektiert die Rechte der Nutzer, wenn er persönliche Informationen sammelt.",
             ],
             [
               "q_PRIV6",
-              "Ich denke, dass dieser Skill meine persönlichen Daten nicht ohne meine Zustimmung an andere Unternehmen weitergeben wird.",
+              "Ich denke, dass dieser Chatbot meine persönlichen Daten nicht ohne meine Zustimmung an andere Unternehmen weitergeben wird.",
             ],
           ],
           {
@@ -3953,23 +3973,23 @@
           [
             [
               "q_COMMIT1",
-              "Der Skill wird vertrauensvoll mit meinen Daten umgehen.",
+              "Ich glaube der Chatbot wird vertrauensvoll mit meinen Daten umgehen.",
             ],
             [
               "q_COMMIT2",
-              "Der Skill wird die Wahrheit sagen und die Versprechen in Bezug auf die von mir bereitgestellten personenbezogenen Daten erfüllen.",
+              "Ich glaube der Chatbot wird die Wahrheit sagen und die Versprechen in Bezug auf die von mir bereitgestellten personenbezogenen Daten erfüllen.",
             ],
             [
               "q_COMMIT3",
-              "Ich vertraue darauf, dass der Skill im Umgang mit meinen Daten meine Interessen berücksichtigt.",
+              "Ich vertraue darauf, dass der Chatbot im Umgang mit meinen Daten meine Interessen berücksichtigt.",
             ],
             [
               "q_COMMIT4",
-              "Skills sind im Allgemeinen vorhersehbar und konsistent in Bezug auf die Verwendung der Daten.",
+              "Ich glaube Chatbots sind im Allgemeinen vorhersehbar und konsistent in Bezug auf die Verwendung der Daten.",
             ],
             [
               "q_COMMIT5",
-              "Skills sind immer ehrlich zu den Benutzern, wenn es darum geht, die von mir bereitgestellten Daten zu verwenden.",
+              "Ich glaube Chatbots sind immer ehrlich zu den Benutzern, wenn es darum geht, die von mir bereitgestellten Daten zu verwenden.",
             ],
           ],
           {
@@ -4021,14 +4041,14 @@
 
         s.likert_scale(
           [
-            ["q_COMMIT1", "Ich würde diesen Skill anderen Leuten empfehlen."],
+            ["q_COMMIT1", "Ich würde diesen Chatbot anderen Leuten empfehlen."],
             [
               "q_COMMIT2",
-              "Falls jemand diesen Skill kritisieren sollte, würde ich auf die positiven Aspekte dieses Chatbots hinweisen wollen.",
+              "Falls jemand diesen Chatbot kritisieren sollte, würde ich auf die positiven Aspekte dieses Chatbots hinweisen wollen.",
             ],
             [
               "q_COMMIT3",
-              "Selbst wenn neue Online-Alternativen auftauchen, würde ich diesen Skill weiterhin nutzen.",
+              "Selbst wenn neue Online-Alternativen auftauchen, würde ich diesen Chatbot weiterhin nutzen.",
             ],
           ],
           {
