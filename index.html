@@ -1680,14 +1680,17 @@
             }
           }
           if (this.LZZ == 1) {
-            this.VBEZB = this.VBEZM.multiply(
-              new bigDecimal(this.ZMVB)).add(this.VBEZS);
+            this.VBEZB = this.VBEZM.multiply(new bigDecimal(this.ZMVB)).add(
+              this.VBEZS
+            );
             this.HFVB = Lohnsteuer2021.TAB2[this.J]
               .divide(Lohnsteuer2021.ZAHL12)
               .multiply(new bigDecimal(this.ZMVB));
             this.FVBZ = Lohnsteuer2021.TAB3[this.J]
               .divide(Lohnsteuer2021.ZAHL12)
-              .multiply(new bigDecimal(this.ZMVB).round(0, bigDecimal.RoundingModes.UP));
+              .multiply(
+                new bigDecimal(this.ZMVB).round(0, bigDecimal.RoundingModes.UP)
+              );
           } else {
             this.VBEZB = this.VBEZM.multiply(Lohnsteuer2021.ZAHL12)
               .add(this.VBEZS)
@@ -1766,7 +1769,6 @@
        * Ermittlung des Jahresarbeitslohns nach Abzug der Freibeträge nach § 39 b Abs. 2 Satz 3 und 4 EStG, PAP Seite 20
        */
       Lohnsteuer2021.prototype.MRE4ABZ = function () {
-
         this.ZRE4 = this.ZRE4J.subtract(this.FVB)
           .subtract(this.ALTE)
           .subtract(this.JLFREIB)
@@ -1775,7 +1777,6 @@
 
         if (this.ZRE4.compareTo(new bigDecimal(0)) == -1) {
           this.ZRE4 = new bigDecimal(0);
-
         }
         this.ZRE4VP = this.ZRE4J;
         if (this.KENNVMT == 2) {
@@ -1786,8 +1787,6 @@
               bigDecimal.RoundingModes.DOWN
             );
         }
-
-
 
         this.ZVBEZ = new bigDecimal(
           this.ZVBEZJ - this.FVB.round(2, bigDecimal.RoundingModes.DOWN)
@@ -1850,7 +1849,8 @@
         if (this.STKL < 6) {
           if (this.ZVBEZ.compareTo(new bigDecimal(0)) == 1) {
             if (this.ZVBEZ - this.FVBZ.compareTo(new bigDecimal(102)) == -1) {
-              this.ANP = this.ZVBEZ - this.FVBZ.round(0, bigDecimal.RoundingModes.UP);
+              this.ANP =
+                this.ZVBEZ - this.FVBZ.round(0, bigDecimal.RoundingModes.UP);
             } else {
               this.ANP = new bigDecimal(102);
             }
@@ -1866,7 +1866,8 @@
               -1
             ) {
               this.ANP =
-                this.ANP.add(this.ZRE4) - this.ZVBEZ.round(0, bigDecimal.RoundingModes.UP);
+                this.ANP.add(this.ZRE4) -
+                this.ZVBEZ.round(0, bigDecimal.RoundingModes.UP);
             } else {
               this.ANP = this.ANP.add(Lohnsteuer2021.ZAHL1000);
             }
@@ -1929,13 +1930,12 @@
       Lohnsteuer2021.prototype.MLSTJAHR = function () {
         this.UPEVP();
         if (this.KENNVMT != 1) {
-          console.log("bruh")
+          console.log("bruh");
           this.ZVE = this.ZRE4.subtract(this.ZTABFB).subtract(
             this.VSP.round(2, bigDecimal.RoundingModes.DOWN)
           );
           this.UPMLST(); //Hier wird die STeuer gesetzt
         } else {
-
           this.ZVE =
             this.ZRE4 -
             this.ZTABFB -
@@ -1962,11 +1962,10 @@
               this.VMT.add(this.VKAPA).divide(Lohnsteuer2021.ZAHL500)
             ).round(2, bigDecimal.RoundingModes.DOWN);
             this.UPMLST();
-            this.ST =
-              this.ST.subtract(this.STOVMT).multiply(Lohnsteuer2021.ZAHL5)
-                .add(this.STOVMT)
-                .round(0, bigDecimal.RoundingModes.DOWN);
-
+            this.ST = this.ST.subtract(this.STOVMT)
+              .multiply(Lohnsteuer2021.ZAHL5)
+              .add(this.STOVMT)
+              .round(0, bigDecimal.RoundingModes.DOWN);
           }
         }
       };
@@ -2119,12 +2118,10 @@
             this.ST = this.ST.add(
               this.ZZX.subtract(this.W3STKL5).multiply(new bigDecimal(0.45))
             ).round(0, bigDecimal.RoundingModes.DOWN);
-
           } else {
             this.ST = this.ST.add(
               this.ZZX.subtract(this.W2STKL5).multiply(new bigDecimal(0.42))
             ).round(0, bigDecimal.RoundingModes.DOWN);
-
           }
         } else {
           this.ZX = this.ZZX;
@@ -2162,7 +2159,7 @@
         );
         this.UPTAB21();
         this.ST2 = this.ST;
- 
+
         this.DIFF = this.ST1.subtract(this.ST2).multiply(Lohnsteuer2021.ZAHL2);
         this.MIST = this.ZX.multiply(new bigDecimal(0.14)).round(
           0,
@@ -2205,7 +2202,7 @@
         }
         if (this.R > 0) {
           this.JW = this.JBMG.multiply(Lohnsteuer2021.ZAHL100);
-          console.log("JW", this.JW)
+          console.log("JW", this.JW);
 
           this.UPANTEIL();
 
@@ -2489,15 +2486,13 @@
           //Wir sind in diesem Zustand
         } else {
           if (this.X.compareTo(new bigDecimal(14754)) == -1) {
-            this.Y = this.X.subtract(
-              this.GFB).divide(
-                Lohnsteuer2021.ZAHL10000,
-                6,
-                bigDecimal.RoundingModes.DOWN
-
+            this.Y = this.X.subtract(this.GFB).divide(
+              Lohnsteuer2021.ZAHL10000,
+              6,
+              bigDecimal.RoundingModes.DOWN
             );
             this.RW = this.Y.multiply(new bigDecimal(995.21));
-            console.log("Y after UPTAB21", this.Y)
+            console.log("Y after UPTAB21", this.Y);
             this.RW = this.RW.add(new bigDecimal(1400));
             this.ST = this.RW.multiply(this.Y).round(
               0,
@@ -2532,17 +2527,6 @@
         }
         this.ST = this.ST.multiply(new bigDecimal(this.KZTAB));
       };
-
-      /*
-//LSTLZZ -> ANTEIL1 -> JW
-{RE4:grossValue,PKV:1,
-        PVS:0,
-        PVZ:0,
-        STKL:steuerKlasse,
-        LZZ:lzz,
-        KRV:2,
-      f: faktorVerfahren}
-      */
 
       //-----------------------------------------------Lohnsteuerrechner------------------------------------------//
 
@@ -3117,7 +3101,7 @@
           self.output +=
             "<table><tr>" +
             '<td width="900px" margin-right="40px"></td>' +
-            '<td width="150px">' +
+            '<td width="80px">' +
             '<span class="small">' +
             disagree +
             "</span>" +
@@ -3137,7 +3121,7 @@
             self.output += "<tr>" + "<td>" + q + "</td>";
             for (var i = 1; i < points + 1; i++) {
               self.output +=
-                '<td width="100px">' +
+                '<td width="80px">' +
                 '<input type="radio" name="' +
                 n +
                 '" value="' +
@@ -3280,7 +3264,7 @@
                 </li>
                 <li>Bundesland
                 </li>
-                <li>Wird Kirchensteuer gezahlt?
+                <li>Kirchensteuerpflicht
                 </li>
                 <li>Subjektive Bewertungen deiner Erfahrung mit dem Chatbot-System
                 </li>
@@ -3315,7 +3299,7 @@
         let married = false;
         let kirchensteuer = 0;
         s.begin(() => {
-          //s.survey("survey")
+          s.survey("survey")
           s.set("condition", cbl.random_item(["control", "privacy_priming"])); //, "control", "privacy_priming"
           $("#survey_form").append(
             '<input type="hidden" name="condition" value="' +
@@ -3365,25 +3349,26 @@
             ss.begin(() => {
               s.set("voice", "Vicki");
             });
+
             s.say(
               `Alles klar. Ich kann die Lohnsteuer für Arbeitnehmer berechnen. Dazu stelle ich dir einige Fragen zur Steuerklasse, Kirchenbeträgen oder auch deinem Alter.`
             );
-            s.pause(4000);
+            s.pause(4500);
             // s.say('Dazu stelle ich dir einige Fragen zur Steuerklasse, Kirchenbeträgen oder auch deinem Alter.')
             s.say(
               "In der Berechnung gehe ich davon aus, dass du gesetzlich versichert bist und keine weiteren geldwerten Vorteile angeben willst."
             );
-            s.pause(4000);
+            s.pause(4500);
             s.say(
               "Außerdem hast du die Möglichkeit, deine Daten zu speichern."
               // oder dir die Ergebnisse per E-Mail zusenden zu lassen. Hierfür benötige ich natürlich deine Erlaubnis. Diese kannst du in der Alexa App freigeben.
             );
-            s.pause(2000);
+            s.pause(3000);
             // s.say('Hierfür benötige ich natürlich deine Erlaubnis. Diese kannst du in der Alexa App freigeben.');
             s.say(
-              `Wenn du später nochmal die Einführung hören willst, sage einfach "Alexa, Hilfe".`
+              `Wenn du später nochmal die Einführung hören willst, sage einfach "Einführung".`
             );
-            s.pause(2000);
+            s.pause(3000);
             s.say(
               "Das war's auch schon. Für welchen Betrag möchtest du den Nettowert wissen?"
             );
@@ -3408,6 +3393,12 @@
             $("#hint").html(
               "Du kannst ein <b>Jahres-</b> oder <b>Monatsgehalt</b> angeben. Gib dazu jeweils dein Gehalt <b>als Zahl</b> an"
             );
+          });
+
+          ss.match(/Einführung/i, () => {
+            $("#hint").html("");
+
+            s.run("introduction");
           });
 
           ss.match(/^[4-9][5-9][0-9]|\d{3,}/im, () => {
@@ -3435,6 +3426,12 @@
               });
             });
 
+            ss.match(/Einführung/i, () => {
+              $("#hint").html("");
+
+              s.run("introduction");
+            });
+
             ss.match(/ja/i, () => {
               $("#hint").html("");
               lzz = 1;
@@ -3456,6 +3453,8 @@
             });
 
             ss.unknown(function () {
+              $("#hint").html("");
+
               s.say("Ist dein genannter Betrag ein Jahreseinkommen?");
             });
           });
@@ -3492,6 +3491,11 @@
               );
             });
           });
+
+          ss.match(/Einführung/i, () => {
+            s.run("introduction");
+          });
+
           //https://www.bmf-steuerrechner.de/ekst/eingabeformekst.xhtml?ekst-result=true
           let taxClassRegex = new RegExp(/^[1-6]?$|6/im);
           ss.match(taxClassRegex, () => {
@@ -3505,6 +3509,8 @@
           });
 
           ss.match(/weiß nicht|weiß ich nicht|keine ahnung|kein plan/i, () => {
+            $("#hint").html("");
+
             s.ready(() => {
               s.run("taxesHelp");
             });
@@ -3542,6 +3548,10 @@
               });
             });
 
+            ss.match(/Einführung/i, () => {
+              s.run("introduction");
+            });
+
             ss.match(/haupt/i, () => {
               $("#hint").html("");
               s.say("Alles klar! Bist du denn verheiratet?");
@@ -3557,6 +3567,12 @@
               ss.begin(() => {
                 s.set("voice", "Vicki");
                 $("#hint").html("");
+              });
+
+              ss.match(/Einführung/i, () => {
+                $("#hint").html("");
+
+                s.run("introduction");
               });
 
               ss.match(/ja/i, () => {
@@ -3578,9 +3594,9 @@
               });
 
               ss.match(/nein/i, () => {
+                $("#hint").html("");
                 married = false;
                 steuerKlasse = 1;
-                $("#hint").html("");
                 //s.say("Alles klar! Hast du minderjährige Kinder?");
                 s.ready(() => {
                   s.run("children");
@@ -3611,6 +3627,8 @@
             });
 
             ss.unknown(function () {
+              $("#hint").html("");
+
               s.say(
                 `Handelt es sich bei dem Betrag um ein Haupt- oder Nebeneinkommen?`
               );
@@ -3618,6 +3636,8 @@
           });
 
           ss.unknown(function () {
+            $("#hint").html("");
+
             s.say(
               `Da stimmt was nicht ganz. Am besten du nennst mir deine Steuerklasse als Zahl.`
             );
@@ -3640,6 +3660,11 @@
               $("#hint").html("Wenn du keine Kinder hast, gib 0 ein.");
             });
           });
+          ss.match(/Einführung/i, () => {
+            $("#hint").html("");
+
+            s.run("introduction");
+          });
         });
 
         s.sub("children_sub", (ss) => {
@@ -3647,7 +3672,15 @@
             s.set("voice", "Vicki");
           });
 
+          ss.match(/Einführung/i, () => {
+            $("#hint").html("");
+
+            s.run("introduction");
+          });
+
           ss.match(/^[0-9]{0,}$/im, () => {
+            $("#hint").html("");
+
             children = parseInt(msgArray.slice(-1).pop());
             console.log("Kinder:", children);
             faktorVerfahren = married || steuerKlasse == 4 ? 0.5 * children : 0;
@@ -3671,9 +3704,15 @@
             s.set("voice", "Vicki");
             s.say("Ok! Und in welchem Bundesland lebst du?");
             $("#hint").html(
-              "Nenne hier dein <b>Bundesland</b>, oder gib <b>'Hilfe'</b> ein, wenn du mehr wissen willst.<br/>Du kannst für längere Namen auch eine Abkürzung verwenden:</br>"+
-             "<ul><li>Mecklenburg-Vorpommern: MV</li><li>Sachsen-Anhalt: SA</li><li>Rheinland-Pfalz: RP</li><li>Baden-Würtemberg: BW</li><li>Nordrhein-Westfalen: NRW</li>"
+              "Nenne hier dein <b>Bundesland</b>, oder gib <b>'Hilfe'</b> ein, wenn du mehr wissen willst.<br/>Du kannst für längere Namen auch eine Abkürzung verwenden:</br>" +
+                "<ul><li>Mecklenburg-Vorpommern: MV</li><li>Sachsen-Anhalt: SA</li><li>Rheinland-Pfalz: RP</li><li>Baden-Würtemberg: BW</li><li>Nordrhein-Westfalen: NRW</li>"
             );
+          });
+
+          ss.match(/Einführung/i, () => {
+            $("#hint").html("");
+
+            s.run("introduction");
           });
 
           let bundesLaender = new RegExp(
@@ -3718,6 +3757,12 @@
             });
           });
 
+          ss.match(/Einführung/i, () => {
+            $("#hint").html("");
+
+            s.run("introduction");
+          });
+
           ss.match(/ja/i, async () => {
             $("#hint").html("");
             switch (bundesLand.toLowerCase()) {
@@ -3734,14 +3779,16 @@
           });
 
           ss.match(/nein/i, async () => {
-            kirchensteuer = 0;
             $("#hint").html("");
+            kirchensteuer = 0;
             s.ready(() => {
               s.run("calculationResult");
             });
           });
 
           ss.match(/hilfe|kein plan|keine ahnung|weiß nicht/i, () => {
+            $("#hint").html("");
+
             s.say(
               `Abhängig vom Bundesland in dem du lebst, bezahlst du als Mitglied der evangelischen oder katholischen Kirche eine Kirchensteuer, die dir direkt vom Bruttolohn abgezogen wird.`
             );
@@ -3770,8 +3817,9 @@
             //ALV: 1.2%
             //KV: 7,85%
 
-            
-
+            ss.match(/Einführung/i, () => {
+              s.run("introduction");
+            });
             //Pflegeversicherung 3,4% ohne Kinder, 3,05% mit Kindern https://www.bundesgesundheitsministerium.de/themen/pflege/online-ratgeber-pflege/die-pflegeversicherung/finanzierung.html#:~:text=Der%20Beitragssatz%20liegt%20seit%20dem,H%C3%A4lfte%2C%20also%20jeweils%201%2C525%20Prozent.
             lst2021 = new Lohnsteuer2021({
               RE4: grossValue * 100,
@@ -3788,8 +3836,9 @@
 
             lst2021.MAIN();
             let lohnsteuer =
-              (lst2021.getLstlzz().value/100) + (lst2021.getSts().value/100) +
-              (lst2021.getStv().value/100);
+              lst2021.getLstlzz().value / 100 +
+              lst2021.getSts().value / 100 +
+              lst2021.getStv().value / 100;
 
             console.log("kirchensteuer", kirchensteuer);
             kirchensteuer = kirchensteuer * lohnsteuer;
@@ -3798,21 +3847,34 @@
             //------------------------Sozialabgaben-Gleitzone--------------------//
 
             //Anteile Gleitzone
-            
+
             const FAKTOR_F = 0.7509;
-            let beitragsBemessungsWert = FAKTOR_F * 450 + ((1300/(1300-450)) - (450/(1300-450)) * FAKTOR_F) * (grossValue - 450);
-            
-            const anteilRvGleit = (0.186 * beitragsBemessungsWert) - (0.093 * grossValue);
-            const anteilALV = (0.024 * beitragsBemessungsWert) - (0.012 * grossValue);
-            const anteilKV = (0.147 *beitragsBemessungsWert) - (0.0785 * grossValue);
-            const anteilPV = children > 0? (0.0305 * beitragsBemessungsWert) - (0.01525 * grossValue): (0.034 * beitragsBemessungsWert) - (0.01875 * grossValue);
+            let beitragsBemessungsWert =
+              FAKTOR_F * 450 +
+              (1300 / (1300 - 450) - (450 / (1300 - 450)) * FAKTOR_F) *
+                (grossValue - 450);
+
+            const anteilRvGleit =
+              0.186 * beitragsBemessungsWert - 0.093 * grossValue;
+            const anteilALV =
+              0.024 * beitragsBemessungsWert - 0.012 * grossValue;
+            const anteilKV =
+              0.147 * beitragsBemessungsWert - 0.0785 * grossValue;
+            const anteilPV =
+              children > 0
+                ? 0.0305 * beitragsBemessungsWert - 0.01525 * grossValue
+                : 0.034 * beitragsBemessungsWert - 0.01875 * grossValue;
             console.log("anteilRvGleit", anteilRvGleit);
             console.log("anteilALV", anteilALV);
             console.log("anteilKV", anteilKV);
             console.log("anteilPV", anteilPV);
 
-            let sozialabgaben = grossValue > 450 && grossValue <= 1300 ? (anteilRvGleit + anteilALV + anteilKV + anteilPV): grossValue > 1300? grossValue * (0.093 + 0.012 + 0.073 + pflegeVersicherung): 0; //https://www.lohn-info.de/gleitzone_2022.html
-
+            let sozialabgaben =
+              grossValue > 450 && grossValue <= 1300
+                ? anteilRvGleit + anteilALV + anteilKV + anteilPV
+                : grossValue > 1300
+                ? grossValue * (0.093 + 0.012 + 0.073 + pflegeVersicherung)
+                : 0; //https://www.lohn-info.de/gleitzone_2022.html
 
             console.log("lohnsteuer", lohnsteuer);
             console.log("sozialabgaben", sozialabgaben);
@@ -3850,6 +3912,9 @@
           });
 
           ss.match(/ja|jo|sicher|jaup|löschen|ok/i, () => {
+            $("#hint").html(
+            ""
+          );
             $("#survey_form").append(
               '<input type="hidden"name="response_yn"value="yes"/>'
             );
@@ -3867,6 +3932,9 @@
           ss.match(
             /nein|nö|nicht löschen|lieber nicht|auf keinen Fall/i,
             () => {
+              $("#hint").html(
+            ""
+          );
               $("#survey_form").append(
                 '<input type="hidden"name="response_yn"value="no"/>'
               );
@@ -3893,9 +3961,18 @@
             s.say(
               "Soll ich die angegebenen Daten für die nächste Berechnung speichern?"
             );
+
+            s.ready(() => {
+              $("#hint").html(
+                "Gib <b>'Ja'</b> ein, wenn du deine Eingaben speichern willst, oder <b>'Nein'</b>, wenn du das nicht willst."
+              );
+            });
           });
 
           ss.match(/ja|jo|sicher|jaup|ok/i, () => {
+            $("#hint").html(
+            ""
+          );
             $("#survey_form").append(
               '<input type="hidden" name="response_yn" value="yes" />'
             );
@@ -3909,6 +3986,9 @@
           });
 
           ss.match(/ne|nein|nicht speichern/i, () => {
+            $("#hint").html(
+            ""
+          );
             $("#survey_form").append(
               '<input type="hidden" name="response_yn" value="no" />'
             );
@@ -3926,10 +4006,6 @@
               "Sage einfach 'Ja', wenn ich die Daten für die nächste Berechnung speichern soll."
             );
           });
-
-          $("#hint").html(
-            "Gib <b>'Ja'</b> ein, wenn du deine Eingaben speichern willst, oder <b>'Nein'</b>, wenn du das nicht willst."
-          );
         });
 
         s.sub("survey_subscript", (ss) => {
@@ -3940,7 +4016,7 @@
       });
 
       cbl.survey("survey", (s) => {
-       /* s.section(
+        /* s.section(
           "Im folgenden werden wir das statt <b>'Chatbot'</b> das Wort <b>'Chatbot'</b> verwenden.<br/> Der Begriff <b>'Chatbot'</b> beschreibt hierbei eine Anwendung, ähnlich einer App, für Amazon Alexa Geräte.<br/>"
         );*/
         s.section(
@@ -3956,7 +4032,7 @@
             ],
             [
               "q_PRIV2",
-              "Ich fühle mich sicher, wenn ich persönliche Informationen an diesen Chatbot sende.",
+              "Ich fühle mich sicher, wenn ich persönliche Daten an diesen Chatbot sende.",
             ],
             [
               "q_PRIV3",
@@ -3968,7 +4044,7 @@
             ],
             [
               "q_PRIV5",
-              "Dieser Chatbot respektiert die Rechte der Nutzer, wenn er persönliche Informationen sammelt.",
+              "Dieser Chatbot respektiert die Rechte der Nutzer, wenn er persönliche Daten sammelt.",
             ],
             [
               "q_PRIV6",
@@ -3986,23 +4062,23 @@
         s.likert_scale(
           [
             [
-              "q_COMMIT1",
+              "q_TRUST1",
               "Ich glaube der Chatbot wird vertrauensvoll mit meinen Daten umgehen.",
             ],
             [
-              "q_COMMIT2",
+              "q_TRUST2",
               "Ich glaube der Chatbot wird die Wahrheit sagen und die Versprechen in Bezug auf die von mir bereitgestellten personenbezogenen Daten erfüllen.",
             ],
             [
-              "q_COMMIT3",
+              "q_TRUST3",
               "Ich vertraue darauf, dass der Chatbot im Umgang mit meinen Daten meine Interessen berücksichtigt.",
             ],
             [
-              "q_COMMIT4",
+              "q_TRUST4",
               "Ich glaube Chatbots sind im Allgemeinen vorhersehbar und konsistent in Bezug auf die Verwendung der Daten.",
             ],
             [
-              "q_COMMIT5",
+              "q_TRUST5",
               "Ich glaube Chatbots sind immer ehrlich zu den Benutzern, wenn es darum geht, die von mir bereitgestellten Daten zu verwenden.",
             ],
           ],
@@ -4017,33 +4093,33 @@
         s.likert_scale(
           [
             [
-              "q_COMMIT1",
-              "Der Online-Datenschutz der Verbraucher ist eine Frage des Rechts der Verbraucher, Kontrolle und Autonomie über Entscheidungen darüber auszuüben, wie deine Informationen gesammelt, verwendet und weitergegeben werden.",
+              "q_IUIPC1",
+              "Der Online-Datenschutz der Verbraucher ist eine Frage des Rechts der Verbraucher, Kontrolle und Autonomie über Entscheidungen darüber auszuüben, wie deine Daten gesammelt, verwendet und weitergegeben werden.",
             ],
             [
-              "q_COMMIT2",
+              "q_IUIPC2",
               //"Die Kontrolle der Verbraucher über personenbezogene Daten ist das Herzstück der Privatsphäre der Verbraucher.",
-              "Die Kontrolle durch den Verbraucher über seine personenbezogene Daten liegt im Mittelpunkt des Verbraucherdatenschutzes.",
+              "Die Kontrolle durch den Verbraucher über seine persönliche Daten liegt im Mittelpunkt des Verbraucherdatenschutzes.",
             ],
             [
-              "q_COMMIT3",
+              "q_IUIPC3",
               "Unternehmen, die online Daten sammeln, sollten offenlegen, wie die Daten erhoben, verarbeitet und genutzt werden.",
             ],
             [
-              "q_COMMIT4",
+              "q_IUIPC4",
               "Eine gute Online-Datenschutzrichtlinie sollte für Verbraucher klar und transparent sein.",
             ],
             [
-              "q_COMMIT5",
+              "q_IUIPC5",
               "Ich denke manchmal zweimal drüber nach, meine persönlichen Daten auszuhändigen, wenn Unternehmen mich danach fragen.",
             ],
             [
-              "q_COMMIT6",
-              "Es stört mich, meine personenbezogenen Daten an so viele Unternehmen weiterzugeben.",
+              "q_IUIPC6",
+              "Es stört mich, meine persönliche Daten an so viele Unternehmen weiterzugeben.",
             ],
             [
-              "q_COMMIT7",
-              "Ich mache mir Sorgen, dass Unternehmen zu viele personenbezogene Daten von mir sammeln.",
+              "q_IUIPC7",
+              "Ich mache mir Sorgen, dass Unternehmen zu viele persönliche Daten von mir sammeln.",
             ],
           ],
           {
@@ -4072,6 +4148,22 @@
           }
         );
 
+       
+
+        s.section("<br /><br />Fragen zu deiner Person:");
+
+        s.select(
+          "n_usage",
+          "Wie häufig nutzt du Chatbots?",
+          [
+            ["no", "Überhaupt nicht"],
+            ["seldom", "Weniger als einmal im Monat"],
+            ["often", "2-4 Mal im Monat"],
+            ["frequent", "Mehr als einmal die Woche"],
+          ],
+          { desc_width: "40%" }
+        );
+
         s.select(
           "n_smartDevicesOwnershipt",
           "Benutzt du einen der folgenden Sprachassistenten?",
@@ -4089,16 +4181,14 @@
           { desc_width: "40%" }
         );
 
-        s.section("<br /><br />Fragen zu deiner Person:");
-
         s.select(
           "n_gender",
-          "Welches Geschlecht hast du?",
+          "Geschlecht",
           [
+            ["other", "Keine Angabe"],
             ["male", "Männlich"],
             ["female", "Weiblich"],
             ["diverse", "Divers"],
-            ["other", "Keine Angabe"],
           ],
           { desc_width: "40%" }
         );
@@ -4111,17 +4201,6 @@
         ]),
           { desc_width: "40%" };
 
-        s.select(
-          "n_usage",
-          "Wie häufig nutzen Sie Chatbots?",
-          [
-            ["no", "Überhaupt nicht"],
-            ["seldom", "Weniger als einmal im Monat"],
-            ["often", "2-4 Mal im Monat"],
-            ["frequent", "Mehr als einmal die Woche"],
-          ],
-          { desc_width: "40%" }
-        );
       });
 
       cbl.completed((e) => {
