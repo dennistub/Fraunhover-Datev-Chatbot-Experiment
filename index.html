@@ -1518,7 +1518,7 @@
        */
       Lohnsteuer2021.prototype.MPARA = function () {
         if (this.KRV < 2) {
-          if (this.KRV === 0) {
+          if (this.KRV == 0) {
             this.BBGRV = new bigDecimal(84600);
           } else {
             this.BBGRV = new bigDecimal(81000);
@@ -1532,14 +1532,14 @@
           .divide(Lohnsteuer2021.ZAHL100)
           .add(new bigDecimal(0.07));
         this.KVSATZAG = new bigDecimal(parseFloat(0.0065 + 0.07).toFixed(2));
-        if (this.PVS === 1) {
+        if (this.PVS == 1) {
           this.PVSATZAN = new bigDecimal(0.02025);
           this.PVSATZAG = new bigDecimal(0.01025);
         } else {
           this.PVSATZAN = new bigDecimal(0.01525);
           this.PVSATZAG = new bigDecimal(0.01525);
         }
-        if (this.PVZ === 1) {
+        if (this.PVZ == 1) {
           this.PVSATZAN = this.PVSATZAN.add(new bigDecimal(0.0035));
         }
         this.W1STKL5 = new bigDecimal(11480);
@@ -1577,13 +1577,14 @@
             bigDecimal.RoundingModes.DOWN
           );
         } else {
-          if (this.LZZ === 2) {
+          if (this.LZZ == 2) {
             this.RE4 = new bigDecimal(this.RE4);
             this.ZRE4J = this.RE4.multiply(Lohnsteuer2021.ZAHL12).divide(
               Lohnsteuer2021.ZAHL100,
               2,
               bigDecimal.RoundingModes.DOWN
             );
+
             this.ZVBEZJ = this.VBEZ.multiply(Lohnsteuer2021.ZAHL12).divide(
               Lohnsteuer2021.ZAHL100,
               2,
@@ -1601,7 +1602,7 @@
               bigDecimal.RoundingModes.DOWN
             );
           } else {
-            if (this.LZZ === 3) {
+            if (this.LZZ == 3) {
               this.ZRE4J = this.RE4.multiply(Lohnsteuer2021.ZAHL360).divide(
                 Lohnsteuer2021.ZAHL700,
                 2,
@@ -1680,14 +1681,13 @@
           }
           if (this.LZZ == 1) {
             this.VBEZB = this.VBEZM.multiply(
-              new bigDecimal(this.ZMVB).add(this.VBEZS)
-            );
+              new bigDecimal(this.ZMVB)).add(this.VBEZS);
             this.HFVB = Lohnsteuer2021.TAB2[this.J]
               .divide(Lohnsteuer2021.ZAHL12)
               .multiply(new bigDecimal(this.ZMVB));
             this.FVBZ = Lohnsteuer2021.TAB3[this.J]
               .divide(Lohnsteuer2021.ZAHL12)
-              .multiply(new bigDecimal(this.ZMVB).round(0, bigDecimal.UP));
+              .multiply(new bigDecimal(this.ZMVB).round(0, bigDecimal.RoundingModes.UP));
           } else {
             this.VBEZB = this.VBEZM.multiply(Lohnsteuer2021.ZAHL12)
               .add(this.VBEZS)
@@ -1697,7 +1697,7 @@
           }
           this.FVB = this.VBEZB.multiply(Lohnsteuer2021.TAB1[this.J])
             .divide(Lohnsteuer2021.ZAHL100)
-            .round(2, bigDecimal.UP);
+            .round(2, bigDecimal.RoundingModes.UP);
           if (this.FVB.compareTo(this.HFVB) === 1) {
             this.FVB = this.HFVB;
           }
@@ -1708,7 +1708,7 @@
             this.VBEZBSO.multiply(Lohnsteuer2021.TAB1[this.J]).divide(
               Lohnsteuer2021.ZAHL100
             )
-          ).round(2, bigDecimal.UP);
+          ).round(2, bigDecimal.RoundingModes.UP);
           if (this.FVBSO.compareTo(Lohnsteuer2021.TAB2[this.J]) == 1) {
             this.FVBSO = Lohnsteuer2021.TAB2[this.J];
           }
@@ -1717,9 +1717,9 @@
             this.FVBSO.round(2, bigDecimal.RoundingModes.DOWN);
           this.FVBZSO = this.FVBZ.add(
             this.VBEZBSO.divide(Lohnsteuer2021.ZAHL100)
-          ).round(0, bigDecimal.UP);
+          ).round(0, bigDecimal.RoundingModes.UP);
           if (this.FVBZSO.compareTo(this.HFVBZSO) == 1) {
-            this.FVBZSO = this.HFVBZSO.DOWN(0, bigDecimal.UP);
+            this.FVBZSO = this.HFVBZSO.DOWN(0, bigDecimal.RoundingModes.UP);
           }
           if (this.FVBZSO.compareTo(Lohnsteuer2021.TAB3[this.J]) == 1) {
             this.FVBZSO = Lohnsteuer2021.TAB3[this.J];
@@ -1728,7 +1728,7 @@
             this.VBEZB.divide(Lohnsteuer2021.ZAHL100) -
             this.FVB.round(2, bigDecimal.RoundingModes.DOWN);
           if (this.FVBZ.compareTo(this.HFVBZ) == 1) {
-            this.FVBZ = this.HFVBZ.DOWN(0, bigDecimal.UP);
+            this.FVBZ = this.HFVBZ.DOWN(0, bigDecimal.RoundingModes.UP);
           }
         }
         this.MRE4ALTE();
@@ -1750,10 +1750,10 @@
               this.K = 36;
             }
           }
-          this.BMG = this.ZRE4J - this.ZVBEZJ;
+          this.BMG = this.ZRE4J.subtract(this.ZVBEZJ);
           this.ALTE = this.BMG.multiply(Lohnsteuer2021.TAB4[this.K]).round(
             0,
-            bigDecimal.UP
+            bigDecimal.RoundingModes.UP
           );
           this.HBALTE = Lohnsteuer2021.TAB5[this.K];
           if (this.ALTE.compareTo(this.HBALTE) == 1) {
@@ -1766,13 +1766,16 @@
        * Ermittlung des Jahresarbeitslohns nach Abzug der Freibeträge nach § 39 b Abs. 2 Satz 3 und 4 EStG, PAP Seite 20
        */
       Lohnsteuer2021.prototype.MRE4ABZ = function () {
+
         this.ZRE4 = this.ZRE4J.subtract(this.FVB)
           .subtract(this.ALTE)
           .subtract(this.JLFREIB)
           .add(this.JLHINZU)
           .round(2, bigDecimal.RoundingModes.DOWN);
+
         if (this.ZRE4.compareTo(new bigDecimal(0)) == -1) {
           this.ZRE4 = new bigDecimal(0);
+
         }
         this.ZRE4VP = this.ZRE4J;
         if (this.KENNVMT == 2) {
@@ -1783,6 +1786,8 @@
               bigDecimal.RoundingModes.DOWN
             );
         }
+
+
 
         this.ZVBEZ = new bigDecimal(
           this.ZVBEZJ - this.FVB.round(2, bigDecimal.RoundingModes.DOWN)
@@ -1813,6 +1818,7 @@
           0,
           bigDecimal.RoundingModes.DOWN
         );
+
         this.UPLSTLZZ();
         this.UPVKVLZZ();
         if (this.ZKF.compareTo(new bigDecimal(0)) == 1) {
@@ -1844,7 +1850,7 @@
         if (this.STKL < 6) {
           if (this.ZVBEZ.compareTo(new bigDecimal(0)) == 1) {
             if (this.ZVBEZ - this.FVBZ.compareTo(new bigDecimal(102)) == -1) {
-              this.ANP = this.ZVBEZ - this.FVBZ.round(0, bigDecimal.UP);
+              this.ANP = this.ZVBEZ - this.FVBZ.round(0, bigDecimal.RoundingModes.UP);
             } else {
               this.ANP = new bigDecimal(102);
             }
@@ -1860,7 +1866,7 @@
               -1
             ) {
               this.ANP =
-                this.ANP.add(this.ZRE4) - this.ZVBEZ.round(0, bigDecimal.UP);
+                this.ANP.add(this.ZRE4) - this.ZVBEZ.round(0, bigDecimal.RoundingModes.UP);
             } else {
               this.ANP = this.ANP.add(Lohnsteuer2021.ZAHL1000);
             }
@@ -1923,11 +1929,13 @@
       Lohnsteuer2021.prototype.MLSTJAHR = function () {
         this.UPEVP();
         if (this.KENNVMT != 1) {
+          console.log("bruh")
           this.ZVE = this.ZRE4.subtract(this.ZTABFB).subtract(
             this.VSP.round(2, bigDecimal.RoundingModes.DOWN)
           );
           this.UPMLST(); //Hier wird die STeuer gesetzt
         } else {
+
           this.ZVE =
             this.ZRE4 -
             this.ZTABFB -
@@ -1955,10 +1963,10 @@
             ).round(2, bigDecimal.RoundingModes.DOWN);
             this.UPMLST();
             this.ST =
-              this.ST -
-              this.STOVMT.multiply(Lohnsteuer2021.ZAHL5)
+              this.ST.subtract(this.STOVMT).multiply(Lohnsteuer2021.ZAHL5)
                 .add(this.STOVMT)
                 .round(0, bigDecimal.RoundingModes.DOWN);
+
           }
         }
       };
@@ -1997,7 +2005,6 @@
         this.LSTJAHR = this.LSTJAHR;
         this.JW = this.LSTJAHR.multiply(Lohnsteuer2021.ZAHL100);
         this.UPANTEIL();
-
         this.LSTLZZ = this.ANTEIL1;
       };
 
@@ -2108,13 +2115,16 @@
             this.ST = this.ST.add(
               this.W3STKL5.subtract(this.W2STKL5).multiply(new bigDecimal(0.42))
             ).round(0, bigDecimal.RoundingModes.DOWN);
+
             this.ST = this.ST.add(
               this.ZZX.subtract(this.W3STKL5).multiply(new bigDecimal(0.45))
             ).round(0, bigDecimal.RoundingModes.DOWN);
+
           } else {
             this.ST = this.ST.add(
               this.ZZX.subtract(this.W2STKL5).multiply(new bigDecimal(0.42))
             ).round(0, bigDecimal.RoundingModes.DOWN);
+
           }
         } else {
           this.ZX = this.ZZX;
@@ -2144,6 +2154,7 @@
           bigDecimal.RoundingModes.DOWN
         );
         this.UPTAB21();
+
         this.ST1 = this.ST;
         this.X = this.ZX.multiply(new bigDecimal(0.75)).round(
           2,
@@ -2151,8 +2162,7 @@
         );
         this.UPTAB21();
         this.ST2 = this.ST;
-        console.log("ST2", this.ST2);
-        console.log("ST1", this.ST1);
+ 
         this.DIFF = this.ST1.subtract(this.ST2).multiply(Lohnsteuer2021.ZAHL2);
         this.MIST = this.ZX.multiply(new bigDecimal(0.14)).round(
           0,
@@ -2186,6 +2196,7 @@
             0,
             bigDecimal.RoundingModes.DOWN
           );
+
           this.UPANTEIL();
 
           this.SOLZLZZ = this.ANTEIL1;
@@ -2194,6 +2205,8 @@
         }
         if (this.R > 0) {
           this.JW = this.JBMG.multiply(Lohnsteuer2021.ZAHL100);
+          console.log("JW", this.JW)
+
           this.UPANTEIL();
 
           this.BK = this.ANTEIL1;
@@ -2210,6 +2223,7 @@
           this.ANTEIL1 = this.JW;
         } else {
           if (this.LZZ == 2) {
+            //console.log("JW", this.JW)
             this.ANTEIL1 = this.JW.divide(
               Lohnsteuer2021.ZAHL12,
               0,
@@ -2470,27 +2484,27 @@
        * Tarifliche Einkommensteuer §32a EStG, PAP Seite 38
        */
       Lohnsteuer2021.prototype.UPTAB21 = function () {
-        console.log("X", this.X);
         if (this.X.compareTo(this.GFB.add(Lohnsteuer2021.ZAHL1)) == -1) {
           this.ST = new bigDecimal(0);
           //Wir sind in diesem Zustand
         } else {
           if (this.X.compareTo(new bigDecimal(14754)) == -1) {
             this.Y = this.X.subtract(
-              this.GFB.divide(
+              this.GFB).divide(
                 Lohnsteuer2021.ZAHL10000,
                 6,
                 bigDecimal.RoundingModes.DOWN
-              )
+
             );
             this.RW = this.Y.multiply(new bigDecimal(995.21));
-            this.RW = this.RW.multiply(new bigDecimal(1400));
+            console.log("Y after UPTAB21", this.Y)
+            this.RW = this.RW.add(new bigDecimal(1400));
             this.ST = this.RW.multiply(this.Y).round(
               0,
               bigDecimal.RoundingModes.DOWN
             );
           } else {
-            if (this.X.compareTo(new bigDecimal(57919).valueOf()) == -1) {
+            if (this.X.compareTo(new bigDecimal(57919)) == -1) {
               this.Y = this.X.subtract(new bigDecimal(14753)).divide(
                 Lohnsteuer2021.ZAHL10000,
                 6,
@@ -3021,7 +3035,7 @@
           self.output += "<h4>" + t + "</h4>";
         };
         this.select = function (n, t, arr, opts) {
-          var desc_width = "50%";
+          var desc_width = "40%";
           if (opts && opts["desc_width"]) desc_width = opts["desc_width"];
           self.output +=
             '<table width="100%">' +
@@ -3032,7 +3046,7 @@
             t +
             "</td>" +
             "<td>" +
-            '<select class="form-control" name="' +
+            '<select width="50%" class="form-control" name="' +
             n +
             '">';
           arr.forEach(function (a) {
@@ -3041,7 +3055,7 @@
           self.output += "</select>" + "</td>" + "</tr>" + "</table>";
         };
         this.input_text = function (n, t, opts) {
-          var desc_width = "50%";
+          var desc_width = "40%";
           if (opts && opts["desc_width"]) desc_width = opts["desc_width"];
           self.output +=
             '<table width="100%"><tr>' +
@@ -3072,7 +3086,7 @@
             '" class="form-control"></textarea>';
         };
         this.input_range = function (n, t, r0, r1, opts) {
-          var desc_width = "50%";
+          var desc_width = "40%";
           if (opts && opts["desc_width"]) desc_width = opts["desc_width"];
           self.output +=
             '<table width="100%"><tr>' +
@@ -3103,16 +3117,16 @@
           self.output +=
             "<table><tr>" +
             '<td width="900px" margin-right="40px"></td>' +
-            '<td width="75px">' +
+            '<td width="150px">' +
             '<span class="small">' +
             disagree +
             "</span>" +
             "</td>";
           for (var i = 1; i < points - 1; i++) {
-            self.output += '<td width="75px"></td>';
+            self.output += '<td width="150px"></td>';
           }
           self.output +=
-            '<td width="75px">' +
+            '<td width="150px">' +
             '<span class="small">' +
             agree +
             "</span>" +
@@ -3123,7 +3137,7 @@
             self.output += "<tr>" + "<td>" + q + "</td>";
             for (var i = 1; i < points + 1; i++) {
               self.output +=
-                '<td width="75px">' +
+                '<td width="100px">' +
                 '<input type="radio" name="' +
                 n +
                 '" value="' +
@@ -3301,6 +3315,7 @@
         let married = false;
         let kirchensteuer = 0;
         s.begin(() => {
+          //s.survey("survey")
           s.set("condition", cbl.random_item(["control", "privacy_priming"])); //, "control", "privacy_priming"
           $("#survey_form").append(
             '<input type="hidden" name="condition" value="' +
@@ -3773,9 +3788,8 @@
 
             lst2021.MAIN();
             let lohnsteuer =
-              lst2021.getLstlzz().value / 100 +
-              lst2021.getSts().value / 100 +
-              lst2021.getStv().value / 100;
+              (lst2021.getLstlzz().value/100) + (lst2021.getSts().value/100) +
+              (lst2021.getStv().value/100);
 
             console.log("kirchensteuer", kirchensteuer);
             kirchensteuer = kirchensteuer * lohnsteuer;
@@ -4072,7 +4086,7 @@
             ["Mycroft", "Mycroft"],
             ["none", "Keine"],
           ],
-          { desc_width: "70%" }
+          { desc_width: "40%" }
         );
 
         s.section("<br /><br />Fragen zu deiner Person:");
@@ -4086,16 +4100,16 @@
             ["diverse", "Divers"],
             ["other", "Keine Angabe"],
           ],
-          { desc_width: "70%" }
+          { desc_width: "40%" }
         );
 
-        s.input_range("n_age", "Alter", 0, 199, { desc_width: "70%" });
+        s.input_range("n_age", "Alter", 0, 199, { desc_width: "40%" });
 
         s.select("n_language", "Bist du Deutschmuttersprachler?", [
           ["yes", "Ja"],
           ["no", "Nein"],
         ]),
-          { desc_width: "70%" };
+          { desc_width: "40%" };
 
         s.select(
           "n_usage",
@@ -4106,7 +4120,7 @@
             ["often", "2-4 Mal im Monat"],
             ["frequent", "Mehr als einmal die Woche"],
           ],
-          { desc_width: "70%" }
+          { desc_width: "40%" }
         );
       });
 
