@@ -3299,7 +3299,6 @@
         let married = false;
         let kirchensteuer = 0;
         s.begin(() => {
-          s.survey("survey")
           s.set("condition", cbl.random_item(["control", "privacy_priming"])); //, "control", "privacy_priming"
           $("#survey_form").append(
             '<input type="hidden" name="condition" value="' +
