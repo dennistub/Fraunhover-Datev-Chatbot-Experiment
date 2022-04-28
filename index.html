@@ -9,6 +9,7 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+
     <script
       type="text/javascript"
       src="https://s3.amazonaws.com/mturk-public/externalHIT_v1.js"
@@ -3334,7 +3335,7 @@
           ss.match(/nein/i, () => {
             $("#hint").html("");
             s.say(
-              'Kein Problem! Übrigens: Wenn du die Einführung doch hören willst, sag einfach "Alexa, Hilfe".'
+              'Kein Problem! Übrigens: Wenn du die Einführung doch hören willst, sag einfach "Einführung".'
             );
             s.pause(2000);
             s.say("Für welchen Betrag möchtest du den Nettowert wissen?");
@@ -3389,7 +3390,7 @@
             s.set("voice", "Vicki");
 
             $("#hint").html(
-              "Du kannst ein <b>Jahres-</b> oder <b>Monatsgehalt</b> angeben. Gib dazu jeweils dein Gehalt <b>als Zahl</b> an"
+              "Du kannst ein <b>Jahres-</b> oder <b>Monatsgehalt</b> angeben. Gib dazu jeweils dein Gehalt <b>als Zahl</b> an. Solltest du dein Gehalt auf den Cent genau eingeben, verwende bitte ',' als Trennungszeichen."
             );
           });
 
@@ -3399,9 +3400,9 @@
             s.run("introduction");
           });
 
-          ss.match(/^[4-9][5-9][0-9]|\d{3,}/im, () => {
+          ss.match(/^[+-]?([0-9]+\,?[0-9]*|\,[0-9]+)$/im, () => {
             $("#hint").html("");
-            grossValue = parseInt(msgArray.slice(-1).pop());
+            grossValue = parseFloat(msgArray.slice(-1).pop().replace(",", "."));
 
             if (grossValue > 15000) {
               s.run("annualIncome");
@@ -3714,7 +3715,7 @@
           });
 
           let bundesLaender = new RegExp(
-            /Berlin|Brandenburg|Sachsen|Bayern|sachsen-anhalt|Sachsen Anhalt|SA|Mecklenburg-Vorpommern|MV|Mecklenburg Vorpommern|mecklenburg-vorpommern|Thüringen|Saarland|Nordrhein-Westfalen|NRW|Nordrhein westfalen|Niedersachsen|Rheinland-Pfalz|RP|Rheinland Pfalz|Hessen|hessen|Baden-Würtemberg|Baden Würtemberg|Schleswig-Holstein|SH|Schleswig Holstein|Hamburg|Bremen/i
+            /Berlin|BW|Brandenburg|Sachsen|Bayern|sachsen-anhalt|Sachsen Anhalt|SA|Mecklenburg-Vorpommern|MV|Mecklenburg Vorpommern|mecklenburg-vorpommern|Thüringen|Saarland|Nordrhein-Westfalen|NRW|Nordrhein westfalen|Niedersachsen|Rheinland-Pfalz|RP|Rheinland Pfalz|Hessen|hessen|Baden-Würtemberg|Baden Würtemberg|Schleswig-Holstein|SH|Schleswig Holstein|Hamburg|Bremen/i
           );
           ss.match(bundesLaender, () => {
             $("#hint").html("");
@@ -3910,9 +3911,7 @@
           });
 
           ss.match(/ja|jo|sicher|jaup|löschen|ok/i, () => {
-            $("#hint").html(
-            ""
-          );
+            $("#hint").html("");
             $("#survey_form").append(
               '<input type="hidden"name="response_yn"value="yes"/>'
             );
@@ -3930,9 +3929,7 @@
           ss.match(
             /nein|nö|nicht löschen|lieber nicht|auf keinen Fall/i,
             () => {
-              $("#hint").html(
-            ""
-          );
+              $("#hint").html("");
               $("#survey_form").append(
                 '<input type="hidden"name="response_yn"value="no"/>'
               );
@@ -3968,9 +3965,7 @@
           });
 
           ss.match(/ja|jo|sicher|jaup|ok/i, () => {
-            $("#hint").html(
-            ""
-          );
+            $("#hint").html("");
             $("#survey_form").append(
               '<input type="hidden" name="response_yn" value="yes" />'
             );
@@ -3984,9 +3979,7 @@
           });
 
           ss.match(/ne|nein|nicht speichern/i, () => {
-            $("#hint").html(
-            ""
-          );
+            $("#hint").html("");
             $("#survey_form").append(
               '<input type="hidden" name="response_yn" value="no" />'
             );
@@ -4018,7 +4011,7 @@
           "Im folgenden werden wir das statt <b>'Chatbot'</b> das Wort <b>'Chatbot'</b> verwenden.<br/> Der Begriff <b>'Chatbot'</b> beschreibt hierbei eine Anwendung, ähnlich einer App, für Amazon Alexa Geräte.<br/>"
         );*/
         s.section(
-          "<br /><br />Bitte gib an, wie stark du den folgenden Aussagen zustimmen oder nicht zustimmst:"
+          "<br /><br />Bitte gib an, wie stark du den folgenden Aussagen zustimmst oder nicht zustimmst:"
         );
 
         //----------------------Privacy-----------------------------//
@@ -4146,8 +4139,6 @@
           }
         );
 
-       
-
         s.section("<br /><br />Fragen zu deiner Person:");
 
         s.select(
@@ -4166,6 +4157,7 @@
           "n_smartDevicesOwnershipt",
           "Benutzt du einen der folgenden Sprachassistenten?",
           [
+            ["none", "Keine"],
             ["Apple Siri", "Apple Siri"],
             ["Amazon Alexa", "Amazon Alexa"],
             ["Google Assistant", "Google Assistant"],
@@ -4174,7 +4166,6 @@
             ["Telekom Hallo Magenta", "Telekom Hallo Magenta"],
             ["Huawei HiVoice", "Huawei HiVoice"],
             ["Mycroft", "Mycroft"],
-            ["none", "Keine"],
           ],
           { desc_width: "40%" }
         );
@@ -4198,7 +4189,6 @@
           ["no", "Nein"],
         ]),
           { desc_width: "40%" };
-
       });
 
       cbl.completed((e) => {
