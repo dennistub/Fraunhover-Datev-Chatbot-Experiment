@@ -136,14 +136,12 @@
         </div>
       </div>
 
-      <div id="survey" class="container hidden" style="width: 100%; margin: 0">
+      <div id="survey" class="container hidden" style="width: 100%; margin: auto">
         <form
           id="survey_form"
           action=""
           name="mturk_form"
-          method="post"
-          style="width: 100vw"
-        >
+          method="post"        >
           <input type="hidden" name="assignmentId" value="" />
           <input type="hidden" name="scriptName" value="" />
           <input type="hidden" name="transcript" value="" />
@@ -3025,14 +3023,14 @@
           if (opts && opts["desc_width"]) desc_width = opts["desc_width"];
           self.output +=
             '<table width="100%">' +
-            '<tr margin-right="40px">' +
+            '<tr>' +
             '<td width="' +
             desc_width +
             '">' +
             t +
             "</td>" +
             "<td>" +
-            '<select width="50%" class="form-control" name="' +
+            '<select width="40%" class="form-control" name="' +
             n +
             '">';
           arr.forEach(function (a) {
@@ -3317,6 +3315,7 @@
         });
         s.sub((label = "welcome"), (ss) => {
           ss.begin(() => {
+            s.survey("survey")
             s.set("voice", "Vicki");
             s.say("Hi! Willkommen beim DATEV Lab Gehaltsrechner.");
             s.pause(1000);
@@ -4042,6 +4041,14 @@
       });
 
       cbl.survey("survey", (s) => {
+
+
+        cbl.instructions((e) => {
+          e.html(
+            "Vielen Dank für deine Angaben. Nun folgt ein Fragebogen in dem du Fragen hinsichtlich deiner Eindrücke vom Chatbot und dem Thema Datenschutz beantworten sollst.</br></br>"
+          );
+        });
+
         s.section("Aufmerksamkeitstest");
 
         s.select(
@@ -4053,7 +4060,7 @@
             ["blue", "blau"],
             ["orange", "orange"],
           ],
-          { desc_width: "70%" }
+          { desc_width: "40%" }
         );
         /* s.section(
           "Im folgenden werden wir das statt <b>'Chatbot'</b> das Wort <b>'Chatbot'</b> verwenden.<br/> Der Begriff <b>'Chatbot'</b> beschreibt hierbei eine Anwendung, ähnlich einer App, für Amazon Alexa Geräte.<br/>"
@@ -4093,7 +4100,7 @@
           {
             points: 5,
             agree: "Ich stimme voll zu",
-            disagree: "Ich stimme überhaupt nicht zu",
+            disagree: "Ich stimme gar nicht zu",
           }
         );
 
@@ -4124,7 +4131,7 @@
           {
             points: 5,
             agree: "Ich stimme voll zu",
-            disagree: "Ich stimme überhaupt nicht zu",
+            disagree: "Ich stimme gar nicht zu",
           }
         );
 
@@ -4164,7 +4171,7 @@
           {
             points: 5,
             agree: "Ich stimme voll zu",
-            disagree: "Ich stimme überhaupt nicht zu",
+            disagree: "Ich stimme gar nicht zu",
           }
         );
 
@@ -4183,7 +4190,7 @@
           {
             points: 5,
             agree: "Ich stimme voll zu",
-            disagree: "Ich stimme überhaupt nicht zu",
+            disagree: "Ich stimme gar nicht zu",
           }
         );
 
@@ -4193,7 +4200,7 @@
           "n_usage",
           "Wie häufig nutzt du Chatbots?",
           [
-            ["no", "Überhaupt nicht"],
+            ["no", "gar nicht"],
             ["seldom", "Weniger als einmal im Monat"],
             ["often", "2-4 Mal im Monat"],
             ["frequent", "Mehr als einmal die Woche"],
