@@ -3,7 +3,6 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -136,12 +135,12 @@
         </div>
       </div>
 
-      <div id="survey" class="container hidden" style="width: 100%; margin: auto">
-        <form
-          id="survey_form"
-          action=""
-          name="mturk_form"
-          method="post"        >
+      <div
+        id="survey"
+        class="container hidden"
+        style="width: 100%; margin: auto"
+      >
+        <form id="survey_form" action="" name="mturk_form" method="post">
           <input type="hidden" name="assignmentId" value="" />
           <input type="hidden" name="scriptName" value="" />
           <input type="hidden" name="transcript" value="" />
@@ -2544,6 +2543,7 @@
         self.completed_fun = null;
         self.active_script = null;
         self.active_survey = null;
+        self.done = false;
         self.get = function (k) {
           //console.log("cbl.get", k);
           return self.vars[k];
@@ -2605,6 +2605,7 @@
             $("#survey").hide();
             $("#completed").show();
           });
+
           if (self.instructions_funs.length) {
             $("#instructions").show();
             $("#content").hide();
@@ -2612,17 +2613,29 @@
               if (self.instructions_idx == self.instructions_funs.length - 1) {
                 self.instructions_done();
               } else {
+                let instructionNext = $("#instructions-content").html();
+                if (
+                  instructionNext ==
+                  "Auf der nächsten Seite wirst du mit einem <b>Chatbot</b> interagieren. <br><br>Deine <b>Aufgabe</b> wird es sein, einige Angaben zu deinem <b>Gehalt</b>, deiner <b>Steuerklasse</b>, dem <b>Bundesland</b>, in dem du wohnst und der <b>Anzahl deiner Kinder</b> zu machen. Der Chatbot wird daraufhin deinen <b>voraussichtlichen Nettolohn</b> berechnen. Dir werden des Weiteren Hinweise zu den Eingaben, die du tätigen sollst, eingeblendet. Sobald die Interaktion abgeschlossen ist, folgt eine kurze Umfrage.<br><br>"
+                ) {
+                  self.instructions_done();
+
+                }
                 self.instructions_idx += 1;
+
                 self.instructions_next();
               }
             });
+
             self.instructions_next();
           } else {
             self.instructions_done();
           }
         };
+
         self.instructions_next = function () {
           var s = new CBL2Instructions();
+
           self.instructions_funs[self.instructions_idx](s);
         };
         self.instructions_done = function () {
@@ -2836,6 +2849,7 @@
           self.active_script = self.scripts[script_name];
           self.active_script.restart();
         };
+
         self.show_survey = function (survey_name) {
           self.active_survey = survey_name;
           $("#content").hide();
@@ -2979,6 +2993,7 @@
           cbl.output.push([typing_delay_ms, null, null, null]);
           cbl.output.push([0, voice, text, opts]);
         };
+
         this.pause = function (ms) {
           cbl.output.push([ms, null, null, null]);
         };
@@ -3023,7 +3038,7 @@
           if (opts && opts["desc_width"]) desc_width = opts["desc_width"];
           self.output +=
             '<table width="100%">' +
-            '<tr>' +
+            "<tr>" +
             '<td width="' +
             desc_width +
             '">' +
@@ -3311,11 +3326,12 @@
               s.get("condition") +
               '" />'
           );
-          s.run("welcome");
+          s.run("survey_subscript");
         });
         s.sub((label = "welcome"), (ss) => {
           ss.begin(() => {
-            //s.survey("survey")
+            console.log(label);
+
             s.set("voice", "Vicki");
             s.say("Hi! Willkommen beim DATEV Lab Gehaltsrechner.");
             s.pause(1000);
@@ -3331,6 +3347,7 @@
               );
             });
           });
+
           ss.match(/stop|alexa stop/i, () => {
             s.say("Tschüss. Bis dann!!");
             s.survey("css-survey");
@@ -3349,46 +3366,6 @@
               s.run("grossSalary");
             });
           });
-          s.sub((label = "introduction"), (ss) => {
-            console.log(label);
-            $("#hint").html("");
-            ss.begin(() => {
-              s.set("voice", "Vicki");
-            });
-
-            s.say(
-              `Alles klar. Ich kann die Lohnsteuer für Arbeitnehmer berechnen. Dazu stelle ich dir einige Fragen zur Steuerklasse, Kirchenbeträgen oder auch deinem Alter.`
-            );
-            s.pause(4500);
-            // s.say('Dazu stelle ich dir einige Fragen zur Steuerklasse, Kirchenbeträgen oder auch deinem Alter.')
-            s.say(
-              "In der Berechnung gehe ich davon aus, dass du gesetzlich versichert bist und keine weiteren geldwerten Vorteile angeben willst."
-            );
-            s.pause(4500);
-            s.say(
-              "Außerdem hast du die Möglichkeit, deine Daten zu speichern."
-              // oder dir die Ergebnisse per E-Mail zusenden zu lassen. Hierfür benötige ich natürlich deine Erlaubnis. Diese kannst du in der Alexa App freigeben.
-            );
-            s.pause(2000);
-            // s.say('Hierfür benötige ich natürlich deine Erlaubnis. Diese kannst du in der Alexa App freigeben.');
-            s.say(
-              `Wenn du später nochmal die Einführung hören willst, sage einfach "Einführung".`
-            );
-            s.pause(2000);
-
-            s.ready(() => {
-              s.run("grossSalary");
-            });
-            $("#hint").html("");
-
-            ss.unknown(function () {
-              if (label === "welcome") {
-                s.say(
-                  "Möchtest du für den Anfang eine kurze Einführung hören? Sage einfach ja oder nein."
-                );
-              }
-            });
-          });
 
           ss.unknown(function () {
             if (label === "welcome") {
@@ -3400,14 +3377,58 @@
           });
         });
 
+        s.sub("introduction", (ss) => {
+
+          console.log("im being executed");
+          $("#hint").html("");
+          ss.begin(() => {
+            s.set("voice", "Vicki");
+          });
+
+          s.say(
+            `Alles klar. Ich kann die Lohnsteuer für Arbeitnehmer berechnen. Dazu stelle ich dir einige Fragen zur Steuerklasse, Kirchenbeträgen oder auch deinem Alter.`
+          );
+          s.pause(4500);
+          // s.say('Dazu stelle ich dir einige Fragen zur Steuerklasse, Kirchenbeträgen oder auch deinem Alter.')
+          s.say(
+            "In der Berechnung gehe ich davon aus, dass du gesetzlich versichert bist und keine weiteren geldwerten Vorteile angeben willst."
+          );
+          s.pause(4500);
+          s.say(
+            "Außerdem hast du die Möglichkeit, deine Daten zu speichern."
+            // oder dir die Ergebnisse per E-Mail zusenden zu lassen. Hierfür benötige ich natürlich deine Erlaubnis. Diese kannst du in der Alexa App freigeben.
+          );
+          s.pause(2000);
+          // s.say('Hierfür benötige ich natürlich deine Erlaubnis. Diese kannst du in der Alexa App freigeben.');
+          s.say(
+            `Wenn du später nochmal die Einführung hören willst, sage einfach "Einführung".`
+          );
+          s.pause(2000);
+
+          s.ready(() => {
+            s.run("grossSalary");
+          });
+          $("#hint").html("");
+
+          ss.unknown(function () {
+            if (label === "welcome") {
+              s.say(
+                "Möchtest du für den Anfang eine kurze Einführung hören? Sage einfach ja oder nein."
+              );
+            }
+          });
+      });
+
         s.sub("grossSalary", (ss) => {
           console.log("This is grossSalary");
           ss.begin(() => {
             s.set("voice", "Vicki");
             s.say("Für welchen Betrag möchtest du den Nettowert wissen?");
-            $("#hint").html(
-              "Du kannst ein <b>Jahres-</b> oder <b>Monatsgehalt</b> angeben. Gib dazu jeweils dein Gehalt <b>als Zahl</b> an. Solltest du dein Gehalt auf den Cent genau eingeben, verwende bitte ',' als Trennungszeichen."
-            );
+            s.ready(() => {
+              $("#hint").html(
+                "Du kannst ein <b>Jahres-</b> oder <b>Monatsgehalt</b> angeben. Gib dazu jeweils dein Gehalt <b>als Zahl</b> an. Solltest du dein Gehalt auf den Cent genau eingeben, verwende bitte ',' als Trennungszeichen."
+              );
+            });
           });
 
           ss.match(/Einführung/i, () => {
@@ -3734,10 +3755,12 @@
           ss.begin(() => {
             s.set("voice", "Vicki");
             s.say("Ok! Und in welchem Bundesland lebst du?");
-            $("#hint").html(
-              "Nenne hier dein <b>Bundesland</b>, oder gib <b>'Hilfe'</b> ein, wenn du mehr wissen willst.<br/>Du kannst für längere Namen auch eine Abkürzung verwenden:</br>" +
-                "<ul><li>Mecklenburg-Vorpommern: MV</li><li>Sachsen-Anhalt: SA</li><li>Rheinland-Pfalz: RP</li><li>Baden-Würtemberg: BW</li><li>Nordrhein-Westfalen: NRW</li>"
-            );
+            s.ready(() => {
+              $("#hint").html(
+                "Nenne hier dein <b>Bundesland</b>, oder gib <b>'Hilfe'</b> ein, wenn du mehr wissen willst.<br/>Du kannst für längere Namen auch eine Abkürzung verwenden:</br>" +
+                  "<ul><li>Mecklenburg-Vorpommern: MV</li><li>Sachsen-Anhalt: SA</li><li>Rheinland-Pfalz: RP</li><li>Baden-Würtemberg: BW</li><li>Nordrhein-Westfalen: NRW</li>"
+              );
+            });
           });
 
           ss.match(/Einführung/i, () => {
@@ -4034,21 +4057,23 @@
         });
 
         s.sub("survey_subscript", (ss) => {
-          ss.begin(() => {
-            s.survey("survey");
-          });
+          cbl.done = true;
+          cbl.start("instruction");
+          ss.begin(() => {});
         });
       });
 
-      cbl.survey("survey", (s) => {
-
-
+      cbl.script("instruction", (s) => {
         cbl.instructions((e) => {
           e.html(
-            "Vielen Dank für deine Angaben. Nun folgt ein Fragebogen in dem du Fragen hinsichtlich deiner Eindrücke vom Chatbot und dem Thema Datenschutz beantworten sollst.</br></br>"
+            "Vielen Dank für deine Angaben. Bitte fülle nun die folgende Umfrage aus."
           );
         });
-
+        s.begin(() => {
+          s.survey("survey");
+        });
+      });
+      cbl.survey("survey", (s) => {
         s.section("Aufmerksamkeitstest");
 
         s.select(
@@ -4237,6 +4262,8 @@
           { desc_width: "40%" }
         );
 
+
+
         s.input_range("n_age", "Alter", 0, 199, { desc_width: "40%" });
 
         s.select("n_language", "Ist Deutsch deine Muttersprache?", [
@@ -4244,7 +4271,18 @@
           ["no", "Nein"],
         ]),
           { desc_width: "40%" };
+
+          s.section("<br/><br/>Fragen die uns erlauben die gesammelten Antworten eindeutig zuzuordnen");
+
+          s.input_text("n_firstLetterNameMother", "Der erste Buchstabe des Vornamens der Mutter", { desc_width: "40%" });
+          s.input_text("n_firstLetterNameFather", "Der erste Buchstabe des Vornamens des Vaters", { desc_width: "40%" });
+          s.input_text("n_firstLetterBirthplace", "Der erste Buchstabe des Geburtsortes", { desc_width: "40%" });
+          s.input_text("n_lastDigitBirthYear", "Die letzte Ziffer des Geburtsjahres", { desc_width: "40%" });
+          s.input_text("n_lastDigitBirthDay", "Die letzte Ziffer des Geburtstages", { desc_width: "40%" });
+
       });
+
+
 
       cbl.completed((e) => {
         e.html(
