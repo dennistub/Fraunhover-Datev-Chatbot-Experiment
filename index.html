@@ -3358,10 +3358,11 @@
           });
           ss.match(/nein/i, () => {
             $("#hint").html("");
+            label = "grossSalary";
             s.say(
               'Kein Problem! Übrigens: Wenn du die Einführung doch hören willst, sag einfach "Einführung".'
             );
-            s.pause(2000);
+            s.pause(3000)
             s.ready(() => {
               s.run("grossSalary");
             });
@@ -3452,12 +3453,16 @@
                     ","
                   )} Euro Bruttogehalt. Wie ist deine Steuerklasse?`
               );
-              s.run("taxClass");
+              s.pause(2000)
+              s.ready(() => {
+                s.run("taxClass");
+              })
             }
           });
 
           s.sub("annualIncome", (ss) => {
             ss.begin(() => {
+              label = "annualIncome";
               s.set("voice", "Vicki");
               s.say("Ist dein Gehalt ein Jahreseinkommen?");
               s.ready(() => {
@@ -3477,7 +3482,7 @@
               $("#hint").html("");
               lzz = 1;
               s.say(`Alles klar! Wie ist deine Steuerklasse?`);
-
+              s.pause(1000)
               s.ready(() => {
                 s.run("taxClass");
               });
@@ -3487,7 +3492,7 @@
               $("#hint").html("");
               lzz = 2;
               s.say(`Alles klar! Wie ist deine Steuerklasse?`);
-
+              s.pause(1000)
               s.ready(() => {
                 s.run("taxClass");
               });
@@ -3506,6 +3511,9 @@
           });
 
           ss.unknown(function () {
+
+            if(label == "grossSalary"){
+
             s.say("Hoppla, da scheint etwas nicht zu stimmen.");
             s.say(
               "Um den Nettolohn zu berechnen, benötige ich den Bruttobetrag deines monatlichen Einkommens."
@@ -3519,12 +3527,15 @@
               "Versuchen wir es noch einmal. Für welchen Betrag möchtest du den Nettowert wissen?"
             );
             s.pause(2000);
+          }
           });
           $("#hint").html();
         });
 
         s.sub("taxClass", (ss) => {
           ss.begin(() => {
+            label = "taxClass";
+
             s.set("voice", "Vicki");
             s.ready(() => {
               $("#hint").html(
@@ -3578,6 +3589,7 @@
 
           s.sub("taxesHelp", (ss) => {
             ss.begin(() => {
+
               s.set("voice", "Vicki");
               s.say(
                 "Kein Problem. Ich helfe dir dabei. Handelt es sich um ein Haupt- oder Nebeneinkommen?"
@@ -4066,7 +4078,7 @@
       cbl.script("instruction", (s) => {
         cbl.instructions((e) => {
           e.html(
-            "Vielen Dank für deine Angaben. Bitte fülle nun die folgende Umfrage aus. Dir werden unter anderem Fragen zu deiner subjektiven Wahrnehmung des Chatbots, zum Thema Datenschutz, sowie generelle Fragen zu deiner Person gestellt. Um deine Antwortnen von denen anderer Teilnehmer unterscheiden zu können, werden dir zum Schluss Fragen gestellt, die zur Generierung einer eindeutigen ID dienen."
+            "Vielen Dank für deine Angaben. Bitte fülle nun die folgende Umfrage aus. Dir werden unter anderem Fragen zu deiner <b>subjektiven Wahrnehmung des Chatbots</b>, zum Thema <b>Datenschutz</b>, sowie generelle Fragen zu <b>deiner Person</b> gestellt. Um deine Antwortnen von denen anderer Teilnehmer unterscheiden zu können, werden dir zum Schluss Fragen gestellt, die zur <b>Generierung einer eindeutigen ID</b> dienen."
           );
         });
         s.begin(() => {
@@ -4146,11 +4158,11 @@
             ],
             [
               "q_TRUST4",
-              "Ich glaube Chatbots sind im Allgemeinen vorhersehbar und konsistent in Bezug auf die Verwendung der Daten.",
+              "Ich glaube dieser Chatbot ist im Allgemeinen vorhersehbar und konsistent in Bezug auf die Verwendung von Daten",
             ],
             [
               "q_TRUST5",
-              "Ich glaube Chatbots sind immer ehrlich zu den Benutzern, wenn es darum geht, die von mir bereitgestellten Daten zu verwenden.",
+              "Ich glaube dieser Chatbot ist immer ehrlich zu den Benutzern, wenn es darum geht, die von mir bereitgestellten Daten zu verwenden",
             ],
           ],
           {
