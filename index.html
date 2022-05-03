@@ -4313,7 +4313,7 @@ if(self.script_name == 'datev-backup') {
           "<p>Vielen Dank, dass du an dieser Studie teilgenommen hast.</p><br/>"
         );
         console.log("this is datev")
-        
+        console.log(cbl.survey_results_json("survey"))
         let req = new XMLHttpRequest();
         console.log(req)
         req.onreadystatechange = () => {
