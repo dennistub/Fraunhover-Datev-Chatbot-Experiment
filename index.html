@@ -2569,7 +2569,10 @@
         };
         self.start = function (scriptname) {
           // cbl.log("starting " + scriptname);
-          self.transcript = "";
+          if(scriptname != "instruction"){
+
+            self.transcript = "";
+          }
           self.script_name = scriptname;
           self.talking = false;
           if (window.location.href.includes("mturk")) self.mturk_mode = true;
@@ -2659,14 +2662,18 @@
         };
         self.msg_send = function (msg) {
           //console.log("Message send: ", msg);
-          self.transcript += "[user] " + msg + "; ";
-          $(".msgs").append(
-            '<div class="msg-out msg-bubble msg-bubble-out"> ' + msg + "</div>"
-          );
-          self.scroll_to_bottom();
-          self.active_script.input(msg);
+if(self.script_name == 'datev-backup') {
+
+  self.transcript += "[user] " + msg + "; ";
+  $(".msgs").append(
+    '<div class="msg-out msg-bubble msg-bubble-out"> ' + msg + "</div>"
+  );
+  self.scroll_to_bottom();
+  self.active_script.input(msg);
+}
         };
         self.msg_receive = function (name, msg, opts, cb) {
+          if(self.script_name == 'datev-backup'){
           msg = msg.replace(/\*([^*]+?)\*/g, "<b>$1</b>");
           msg = msg.replace(/\_([^*]+?)\_/g, "<i>$1</i>");
           self.transcript += "[" + name + "] " + msg + "; ";
@@ -2679,7 +2686,9 @@
               '<div class="msg-in msg-bubble msg-bubble-in"> ' + msg + "</div>"
             );
           self.scroll_to_bottom();
+          console.log(self.transcript)
           //self.play_voice(name, msg, opts);
+        }
         };
         /*  self.play_voice = function (name, msg, opts) {
           var method = self.get("say_method");
@@ -2815,6 +2824,7 @@
           var f = self.survey_defs[survey_name];
           var s = new CBL2SurveyResults();
           f(s);
+          console.log(survey_name)
           return JSON.stringify(self.merge_all_results(s.results()));
         };
         self.survey_results_csv = function (survey_name) {
@@ -2837,6 +2847,7 @@
           return csv;
         };
         self.merge_all_results = function (s) {
+          console.log(self.transcript)
           var mr = Object.assign(s, self.custom_results);
           mr["transcript"] = self.transcript;
           return mr;
@@ -4304,17 +4315,17 @@
         console.log("this is datev")
         
         let req = new XMLHttpRequest();
-    
-          req.onreadystatechange = () => {
-            if (req.readyState == XMLHttpRequest.DONE) {
-              console.log(req.responseText);
-            }
-          };
-    
-          req.open("POST", "https://api.jsonbin.io/v3/b", true);
-          req.setRequestHeader("Content-Type", "application/json");
-          req.setRequestHeader("X-Master-Key", "$2b$10$OpqpX1ClKRaQhj8QhbE/q.GYv2TZsb.RMyu1c8qIuye9Ki5scgBue");
-          req.send(cbl.survey_results_json("survey"));
+        console.log(req)
+        req.onreadystatechange = () => {
+          if (req.readyState == XMLHttpRequest.DONE) {
+            console.log(req.responseText);
+          }
+        };
+  
+        req.open("POST", "https://api.jsonbin.io/v3/b", true);
+        req.setRequestHeader("Content-Type", "application/json");
+        req.setRequestHeader("X-Master-Key", "$2b$10$OpqpX1ClKRaQhj8QhbE/q.GYv2TZsb.RMyu1c8qIuye9Ki5scgBue");
+        req.send(cbl.survey_results_json("survey"));
       });
       //console.log("completed", cbl.active_script)
 
