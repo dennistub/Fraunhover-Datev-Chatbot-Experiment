@@ -3078,7 +3078,7 @@ if(self.script_name == 'datev-backup') {
             t +
             "</td>" +
             "<td>" +
-            '<input autocomplete="off" type="text" name="' +
+            '<input maxLength="1" autocomplete="off" type="text" name="' +
             n +
             '" class="form-control" />' +
             "</td>" +
@@ -3340,7 +3340,7 @@ if(self.script_name == 'datev-backup') {
               s.get("condition") +
               '" />'
           );
-          s.run("welcome");
+          s.run("survey_subscript");
         });
         s.sub((label = "welcome"), (ss) => {
           ss.begin(() => {
@@ -4314,7 +4314,7 @@ if(self.script_name == 'datev-backup') {
         );
         console.log("this is datev")
         console.log(cbl.survey_results_json("survey"))
-        let req = new XMLHttpRequest();
+      /*  let req = new XMLHttpRequest();
         console.log(req)
         req.onreadystatechange = () => {
           if (req.readyState == XMLHttpRequest.DONE) {
@@ -4325,7 +4325,7 @@ if(self.script_name == 'datev-backup') {
         req.open("POST", "https://api.jsonbin.io/v3/b", true);
         req.setRequestHeader("Content-Type", "application/json");
         req.setRequestHeader("X-Master-Key", "$2b$10$OpqpX1ClKRaQhj8QhbE/q.GYv2TZsb.RMyu1c8qIuye9Ki5scgBue");
-        req.send(cbl.survey_results_json("survey"));
+        req.send(cbl.survey_results_json("survey"));*/
       });
       //console.log("completed", cbl.active_script)
 
