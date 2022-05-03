@@ -4315,7 +4315,6 @@ if(self.script_name == 'datev-backup') {
         console.log("this is datev")
         console.log(cbl.survey_results_json("survey"))
         let req = new XMLHttpRequest();
-        console.log(req)
         req.onreadystatechange = () => {
           if (req.readyState == XMLHttpRequest.DONE) {
             console.log(req.responseText);
