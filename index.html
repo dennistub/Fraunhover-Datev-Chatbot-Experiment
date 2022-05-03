@@ -2598,9 +2598,10 @@
           $("#btn-finish").click(function () {
             if (self.active_survey && !self.validate_survey(self.active_survey))
               return false;
-            if (self.completed_fun) {
+            if (self.completed_fun && scriptname == 'datev-backup') {
               var s = new CBL2Completed();
               self.completed_fun(s);
+              //console.log(scriptname)
             }
             $("#survey").hide();
             $("#completed").show();
@@ -2799,8 +2800,10 @@
         self.instructions = function (f) {
           self.instructions_funs.push(f);
         };
-        self.completed = function (f) {
+        self.completed = function (a,f) {
+          if(a == 'datev'){
           self.completed_fun = f;
+        }
         };
         self.survey = function (survey_name, f) {
           var s = new CBL2Survey();
@@ -3453,7 +3456,6 @@
                     ","
                   )} Euro Bruttogehalt. Wie ist deine Steuerklasse?`
               );
-              s.pause(2000)
               s.ready(() => {
                 s.run("taxClass");
               })
@@ -3482,7 +3484,6 @@
               $("#hint").html("");
               lzz = 1;
               s.say(`Alles klar! Wie ist deine Steuerklasse?`);
-              s.pause(1000)
               s.ready(() => {
                 s.run("taxClass");
               });
@@ -3599,7 +3600,7 @@
                   "Du kannst der Einfachheit halber <b>'haupt'</b> bzw <b>'neben'</b> eingeben."
                 );
               });
-            });
+            })
 
             ss.match(/Einführung/i, () => {
               s.run("introduction");
@@ -4075,7 +4076,7 @@
         });
       });
 
-      cbl.script("instruction", (s) => {
+      cbl.script(script_name = "instruction", (s) => {
         cbl.instructions((e) => {
           e.html(
             "Vielen Dank für deine Angaben. Bitte fülle nun die folgende Umfrage aus. Dir werden unter anderem Fragen zu deiner <b>subjektiven Wahrnehmung des Chatbots</b>, zum Thema <b>Datenschutz</b>, sowie generelle Fragen zu <b>deiner Person</b> gestellt. Um deine Antwortnen von denen anderer Teilnehmer unterscheiden zu können, werden dir zum Schluss Fragen gestellt, die zur <b>Generierung einer eindeutigen ID</b> dienen."
@@ -4296,11 +4297,26 @@
 
 
 
-      cbl.completed((e) => {
+      cbl.completed("datev",(e) => {
         e.html(
           "<p>Vielen Dank, dass du an dieser Studie teilgenommen hast.</p><br/>"
         );
+        console.log("this is datev")
+        
+        let req = new XMLHttpRequest();
+    
+          req.onreadystatechange = () => {
+            if (req.readyState == XMLHttpRequest.DONE) {
+              console.log(req.responseText);
+            }
+          };
+    
+          req.open("POST", "https://api.jsonbin.io/v3/b", true);
+          req.setRequestHeader("Content-Type", "application/json");
+          req.setRequestHeader("X-Master-Key", "$2b$10$OpqpX1ClKRaQhj8QhbE/q.GYv2TZsb.RMyu1c8qIuye9Ki5scgBue");
+          req.send(cbl.survey_results_json("survey"));
       });
+      //console.log("completed", cbl.active_script)
 
       cbl.start("datev-backup");
     </script>
