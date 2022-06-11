@@ -4317,7 +4317,7 @@
       // console.log("this is datev")
       // console.log(cbl.survey_results_json("survey"))
 
-      let req = new XMLHttpRequest();
+      /*let req = new XMLHttpRequest();
       req.onreadystatechange = () => {
         if (req.readyState == XMLHttpRequest.DONE) {
           console.log(req.responseText);
@@ -4326,9 +4326,9 @@
 
       req.open("POST", "https://api.jsonbin.io/v3/b", true);
       req.setRequestHeader("Content-Type", "application/json");
-      req.setRequestHeader("X-Master-Key", "$2b$10$OpqpX1ClKRaQhj8QhbE/q.GYv2TZsb.RMyu1c8qIuye9Ki5scgBue");
+      req.setRequestHeader("X-Master-Key", "");
       req.send(cbl.survey_results_json("survey"));
-    });
+    }); */
     //console.log("completed", cbl.active_script)
 
     cbl.start("datev-backup");
